@@ -987,7 +987,6 @@ Panel {
   onBusyChanged: if (busy) busySeconds = 0
   onHasTrackChanged: if (!hasTrack) {
     playerActionsOpen = false
-    setCoverExpanded(false)
     setLyricsOpen(false)
     setTrackInfoOpen(false)
   }
