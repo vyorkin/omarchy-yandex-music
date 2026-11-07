@@ -20,6 +20,14 @@ function indexOf(value) {
     && value >= 0 && Math.floor(value) === value ? value : -1
 }
 
+function isSequence(value) {
+  // QML hands JS arrays back as sequences (V4Sequence on Qt 6.12) once they
+  // have passed through a `var` property or signal; Array.isArray() is false
+  // for those, so a payload list is matched by shape instead.
+  return value !== null && value !== undefined && typeof value === "object"
+    && typeof value.length === "number"
+}
+
 function resolve(intent, payload) {
   if (Object.prototype.hasOwnProperty.call(simpleCommands, intent)) {
     if (payload !== undefined) return null
@@ -34,7 +42,7 @@ function resolve(intent, payload) {
     return { command: "play_library_collection", argument: payload }
   }
   if (intent === "playCatalogTrack") {
-    if (!Array.isArray(payload) || payload.length !== 2) return null
+    if (!isSequence(payload) || payload.length !== 2) return null
     var source = payload[0]
     var trackIndex = indexOf(payload[1])
     if ((source !== "search" && source !== "entity") || trackIndex < 0) return null

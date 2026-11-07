@@ -42,12 +42,20 @@ var retryableTransport = {
   play_library_collection: true, play_catalog_track: true
 }
 
+function isSequence(value) {
+  // QML hands JS arrays back as sequences (V4Sequence on Qt 6.12) once they
+  // have passed through a `var` property or signal; Array.isArray() is false
+  // for those, so a payload list is matched by shape instead.
+  return value !== null && value !== undefined && typeof value === "object"
+    && typeof value.length === "number"
+}
+
 function resolve(intent, payload) {
   if (!Object.prototype.hasOwnProperty.call(specs, intent)) return null
   var spec = specs[intent]
   if (spec.arity === 0 && payload !== undefined) return null
-  if (spec.arity === 1 && Array.isArray(payload)) return null
-  if (spec.arity > 1 && (!Array.isArray(payload) || payload.length !== spec.arity)) return null
+  if (spec.arity === 1 && isSequence(payload)) return null
+  if (spec.arity > 1 && (!isSequence(payload) || payload.length !== spec.arity)) return null
   return { command: spec.command, argument: payload }
 }
 

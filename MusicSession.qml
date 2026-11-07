@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "CliArgs.js" as CliArgs
 
 Item {
   id: root
@@ -51,13 +52,7 @@ Item {
       statusProcess.running = true
     }
     onActionRequested: function(command, argument) {
-      var args = [root.cli, command]
-      if (Array.isArray(argument)) {
-        for (var i = 0; i < argument.length; i++) args.push(String(argument[i]))
-      } else if (argument !== undefined && argument !== null) {
-        args.push(String(argument))
-      }
-      actionProcess.command = args
+      actionProcess.command = CliArgs.forAction(root.cli, command, argument)
       actionProcess.running = true
     }
     onVolumeRequested: function(value) {
