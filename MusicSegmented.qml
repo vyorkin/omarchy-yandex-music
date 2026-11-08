@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Row of mutually exclusive options. `equalWidth` stretches cells to the full
@@ -11,7 +12,7 @@ Item {
   property string value: ""
   property bool equalWidth: false
   property bool busy: false
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.darker(foreground, 1.5)
   property string fontFamily: Style.font.family
   property int cellHeight: Style.space(30)
@@ -35,9 +36,9 @@ Item {
         readonly property bool selected: String(modelData.value) === root.value
         width: root.equalWidth ? root.width / root.options.length : label.implicitWidth + Style.space(22)
         height: root.cellHeight
-        color: selected ? Style.selectedFillFor(root.foreground, Color.accent)
-          : (cellMouse.containsMouse ? Style.hoverFillFor(root.foreground, Color.accent) : "transparent")
-        borderSpec: Border.controlSpec(selected ? "selected" : "normal", root.foreground, Color.accent)
+        color: selected ? Style.selectedFillFor(root.foreground, Commons.Color.accent)
+          : (cellMouse.containsMouse ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : "transparent")
+        borderSpec: Border.controlSpec(selected ? "selected" : "normal", root.foreground, Commons.Color.accent)
         Row {
           id: label
           anchors.centerIn: parent
@@ -47,7 +48,7 @@ Item {
             visible: String(cell.modelData.icon || "") !== ""
             anchors.verticalCenter: parent.verticalCenter
             name: String(cell.modelData.icon || "")
-            color: cell.selected ? Color.accent : root.dim
+            color: cell.selected ? Commons.Color.accent : root.dim
             size: Style.space(13)
           }
           Rectangle {

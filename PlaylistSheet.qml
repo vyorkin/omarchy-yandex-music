@@ -1,13 +1,14 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 Rectangle {
   id: root
   required property var controller
   property bool wide: false
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.rgba(foreground.r, foreground.g, foreground.b, .55)
   property string fontFamily: Style.font.family
   property int selectedIndex: -1
@@ -22,7 +23,7 @@ Rectangle {
     return count
   }
   signal dismissed()
-  color: Qt.lighter(Color.background, 1.12)
+  color: Qt.lighter(Commons.Color.background, 1.12)
   border.width: Style.spacing.hairline
   border.color: wide ? Qt.rgba(foreground.r, foreground.g, foreground.b, .2) : "transparent"
   clip: true
@@ -81,7 +82,7 @@ Rectangle {
     }
   }
   MouseArea { anchors.fill: parent }
-  Rectangle { width: parent.width; height: Style.spacing.hairline; color: Color.accent; visible: !root.wide }
+  Rectangle { width: parent.width; height: Style.spacing.hairline; color: Commons.Color.accent; visible: !root.wide }
 
   Item {
     id: header
@@ -199,7 +200,7 @@ Rectangle {
           text: (playlistRow.containsTrack
             ? (root.controller.lastSuccessfulKind === playlistRow.kind ? "✓ добавлено · " : "✓ уже здесь · ") : "")
             + Number(playlistRow.modelData.count || 0) + " треков"
-          color: playlistRow.containsTrack ? Color.accent : root.dim
+          color: playlistRow.containsTrack ? Commons.Color.accent : root.dim
           font.family: root.fontFamily; font.pixelSize: Style.font.caption
         }
       }
@@ -207,14 +208,14 @@ Rectangle {
         anchors.right: parent.right; anchors.rightMargin: Style.space(16)
         anchors.verticalCenter: parent.verticalCenter
         width: Style.space(28); height: width
-        color: playlistRow.containsTrack ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .15)
-          : rowMouse.containsMouse && playlistRow.available ? Color.accent : "transparent"
+        color: playlistRow.containsTrack ? Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .15)
+          : rowMouse.containsMouse && playlistRow.available ? Commons.Color.accent : "transparent"
         border.width: Style.spacing.hairline
-        border.color: playlistRow.containsTrack ? Color.accent : root.lineColor
+        border.color: playlistRow.containsTrack ? Commons.Color.accent : root.lineColor
         LucideIcon {
           anchors.centerIn: parent; glyph: playlistRow.containsTrack ? "󰄬" : "󰐕"
           size: Style.space(14)
-          color: rowMouse.containsMouse && playlistRow.available ? Color.background : playlistRow.containsTrack ? Color.accent : root.dim
+          color: rowMouse.containsMouse && playlistRow.available ? Commons.Color.background : playlistRow.containsTrack ? Commons.Color.accent : root.dim
         }
       }
       MouseArea {
@@ -247,7 +248,7 @@ Rectangle {
       x: Style.space(16); anchors.verticalCenter: parent.verticalCenter
       width: Style.space(36); height: width
       horizontalPadding: 0; verticalPadding: 0
-      iconText: "󰐕"; foreground: Color.accent; bordered: true
+      iconText: "󰐕"; foreground: Commons.Color.accent; bordered: true
       enabled: !root.locked && root.controller.membershipError === ""; onClicked: root.controller.beginCreate()
     }
     Column {
@@ -280,7 +281,7 @@ Rectangle {
         }
         IconButton {
           id: createButton
-          text: "Создать"; height: Style.space(34); foreground: Color.accent; bordered: true
+          text: "Создать"; height: Style.space(34); foreground: Commons.Color.accent; bordered: true
           enabled: !root.locked && String(root.controller.draftTitle || "").trim() !== ""
           onClicked: root.controller.submitCreate()
         }
@@ -307,7 +308,7 @@ Rectangle {
       visible: root.controller.mode !== "delete"
       x: Style.space(16); width: parent.width - Style.space(32); height: Style.space(34)
       iconText: "󰆴"; text: "Убрать трек из этого плейлиста"; fontSize: Style.font.caption
-      foreground: Color.urgent; leftAlign: true; bordered: true
+      foreground: Commons.Color.urgent; leftAlign: true; bordered: true
       enabled: !root.locked; onClicked: root.controller.beginDelete()
     }
     Column {
@@ -328,7 +329,7 @@ Rectangle {
       Row {
         spacing: Style.space(8)
         IconButton { text: "Отмена"; foreground: root.foreground; bordered: true; focusable: true; enabled: !root.controller.busy; onClicked: { root.controller.mode = "track"; root.forceActiveFocus() } }
-        IconButton { text: "Убрать"; foreground: Color.urgent; bordered: true; focusable: true; enabled: !root.controller.busy; onClicked: root.controller.confirmDelete() }
+        IconButton { text: "Убрать"; foreground: Commons.Color.urgent; bordered: true; focusable: true; enabled: !root.controller.busy; onClicked: root.controller.confirmDelete() }
       }
     }
     Item { width: 1; height: Style.space(8) }
@@ -349,21 +350,21 @@ Rectangle {
         visible: modelData.text !== ""
         width: notices.width; height: visible ? Math.max(Style.space(36), noticeText.implicitHeight + Style.space(20)) : 0
         color: Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .04)
-        LucideIcon { x: Style.space(16); y: Style.space(11); glyph: modelData.error ? "󰀦" : "󰄬"; size: Style.space(14); color: modelData.error ? Color.urgent : Color.accent }
+        LucideIcon { x: Style.space(16); y: Style.space(11); glyph: modelData.error ? "󰀦" : "󰄬"; size: Style.space(14); color: modelData.error ? Commons.Color.urgent : Commons.Color.accent }
         Text {
           id: noticeText
           textFormat: Text.PlainText
           x: Style.space(40); y: Style.space(10)
           width: parent.width - Style.space(retryButton.visible ? 120 : 56)
           wrapMode: Text.WordWrap; text: modelData.text
-          color: modelData.error ? Color.urgent : Color.accent
+          color: modelData.error ? Commons.Color.urgent : Commons.Color.accent
           font.family: root.fontFamily; font.pixelSize: Style.font.caption
         }
         IconButton {
           id: retryButton
           visible: modelData.error && (root.controller.membershipError !== "" || root.controller.canRetryLastMutation)
           anchors.right: parent.right; anchors.rightMargin: Style.space(12); anchors.verticalCenter: parent.verticalCenter
-          text: "Повторить"; foreground: Color.urgent; fontSize: Style.font.caption
+          text: "Повторить"; foreground: Commons.Color.urgent; fontSize: Style.font.caption
           horizontalPadding: Style.space(4); enabled: !root.locked
           onClicked: root.controller.membershipError !== "" ? root.controller.retryMemberships() : root.controller.retryLastMutation()
         }
@@ -385,7 +386,7 @@ Rectangle {
         Text { textFormat: Text.PlainText; width: parent.width; elide: Text.ElideRight; text: String(modelData.title || "Трек"); color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall }
         Text { textFormat: Text.PlainText; width: parent.width; elide: Text.ElideRight; text: String(modelData.artist || ""); color: root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
       }
-      IconButton { anchors.right: parent.right; anchors.rightMargin: Style.space(16); anchors.verticalCenter: parent.verticalCenter; width: Style.space(28); height: width; horizontalPadding: 0; verticalPadding: 0; iconText: "󰐕"; foreground: Color.accent; tooltipText: "Добавить"; enabled: !root.controller.busy; onClicked: root.controller.addRecommendation(modelData) }
+      IconButton { anchors.right: parent.right; anchors.rightMargin: Style.space(16); anchors.verticalCenter: parent.verticalCenter; width: Style.space(28); height: width; horizontalPadding: 0; verticalPadding: 0; iconText: "󰐕"; foreground: Commons.Color.accent; tooltipText: "Добавить"; enabled: !root.controller.busy; onClicked: root.controller.addRecommendation(modelData) }
     }
     Text { textFormat: Text.PlainText; anchors.centerIn: parent; visible: root.controller.recommendations.length === 0; text: root.controller.busy ? "Подбираем треки…" : "Новых рекомендаций пока нет"; color: root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
   }

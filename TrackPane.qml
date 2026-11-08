@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Очередь, текст и сведения разделяют одну область; browse живёт в CollectionPage.
@@ -88,8 +89,8 @@ Item {
           Rectangle {
             visible: !root.wide
             anchors.fill: parent
-            color: tab.selected ? Style.selectedFillFor(root.fg, Color.accent)
-              : (tabMouse.containsMouse ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
+            color: tab.selected ? Style.selectedFillFor(root.fg, Commons.Color.accent)
+              : (tabMouse.containsMouse ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent")
           }
           Text {
             id: tabLabel
@@ -105,7 +106,7 @@ Item {
           Rectangle {
             visible: root.wide
             anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
-            height: Style.space(2); color: Color.accent
+            height: Style.space(2); color: Commons.Color.accent
             opacity: tab.selected ? 1 : 0
             Behavior on opacity { NumberAnimation { duration: 120 } }
           }
@@ -124,7 +125,7 @@ Item {
       anchors.right: parent.right; anchors.rightMargin: Style.space(16)
       anchors.verticalCenter: parent.verticalCenter
       text: root.countText()
-      color: panel.lyricsOpen && panel.lyricsData.synced ? Color.accent : root.dim
+      color: panel.lyricsOpen && panel.lyricsData.synced ? Commons.Color.accent : root.dim
       font.family: root.ff; font.pixelSize: Style.font.bodySmall
     }
   }
@@ -159,7 +160,7 @@ Item {
       anchors.verticalCenter: parent.verticalCenter
       text: panel.data.queueSourceKind ? "Из: " + String(panel.data.queueSourceName || "") + " ↗" : "Очередь"
       elide: Text.ElideRight
-      color: panel.data.queueSourceKind ? Color.accent : root.dim
+      color: panel.data.queueSourceKind ? Commons.Color.accent : root.dim
       font.family: root.ff; font.pixelSize: Style.font.bodySmall
       MouseArea {
         anchors.fill: parent
@@ -235,8 +236,8 @@ Item {
         width: queueList.width - (queueList.contentHeight > queueList.height ? Style.space(8) : 0)
         height: root.wide ? Style.space(52) : Style.space(48)
         radius: Style.cornerRadius
-        color: isCurrent ? Style.selectedFillFor(root.fg, Color.accent)
-          : (hovered ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
+        color: isCurrent ? Style.selectedFillFor(root.fg, Commons.Color.accent)
+          : (hovered ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent")
         borderSpec: Border.none()
 
         HoverHandler { id: queueHover }
@@ -247,7 +248,7 @@ Item {
           width: Style.space(20); anchors.verticalCenter: parent.verticalCenter
           horizontalAlignment: Text.AlignHCenter
           text: queueRow.isCurrent ? "▶" : String(modelData.index + 1)
-          color: queueRow.isCurrent ? Color.accent : root.dim
+          color: queueRow.isCurrent ? Commons.Color.accent : root.dim
           font.family: root.ff; font.pixelSize: queueRow.isCurrent ? Style.font.caption : Style.font.bodySmall
         }
         CatalogImage {
@@ -268,7 +269,7 @@ Item {
           Text {
             textFormat: Text.PlainText
             width: parent.width; text: modelData.title; elide: Text.ElideRight
-            color: queueRow.isCurrent ? Color.accent : root.fg; font.family: root.ff
+            color: queueRow.isCurrent ? Commons.Color.accent : root.fg; font.family: root.ff
             font.pixelSize: Style.font.body; font.bold: true
           }
           Item {
@@ -284,7 +285,7 @@ Item {
                   required property var modelData
                   required property int index
                   text: modelData.name + (index < (queueRow.modelData.artists || []).length - 1 ? ", " : "")
-                  color: queueArtistMouse.containsMouse ? Color.accent : root.dim
+                  color: queueArtistMouse.containsMouse ? Commons.Color.accent : root.dim
                   font.family: root.ff; font.pixelSize: Style.font.caption
                   MouseArea {
                     id: queueArtistMouse; anchors.fill: parent
@@ -300,7 +301,7 @@ Item {
                 text: (queueRow.modelData.artists || []).length > 0
                   ? " · " + String(queueRow.modelData.album) : String(queueRow.modelData.album)
                 color: queueAlbumMouse.containsMouse && String(queueRow.modelData.albumId || "") !== ""
-                  ? Color.accent : root.dim
+                  ? Commons.Color.accent : root.dim
                 font.family: root.ff; font.pixelSize: Style.font.caption
                 MouseArea {
                   id: queueAlbumMouse; anchors.fill: parent
@@ -336,7 +337,7 @@ Item {
             iconText: "󰐒"
             iconSize: Style.font.icon
             tooltipText: "В плейлист…"
-            foreground: hot ? Color.accent : root.dim
+            foreground: hot ? Commons.Color.accent : root.dim
             onClicked: panel.openCollectionTrack(
               "queue", Number(modelData.index), modelData, false, "", "", queueTrackAction)
           }
@@ -362,9 +363,9 @@ Item {
       z: 1
       enabled: false
       gradient: Gradient {
-        GradientStop { position: 0; color: Color.popups.background }
-        GradientStop { position: 1; color: Qt.rgba(Color.popups.background.r,
-          Color.popups.background.g, Color.popups.background.b, 0) }
+        GradientStop { position: 0; color: Commons.Color.popups.background }
+        GradientStop { position: 1; color: Qt.rgba(Commons.Color.popups.background.r,
+          Commons.Color.popups.background.g, Commons.Color.popups.background.b, 0) }
       }
     }
 
@@ -376,9 +377,9 @@ Item {
       z: 1
       enabled: false
       gradient: Gradient {
-        GradientStop { position: 0; color: Qt.rgba(Color.popups.background.r,
-          Color.popups.background.g, Color.popups.background.b, 0) }
-        GradientStop { position: 1; color: Color.popups.background }
+        GradientStop { position: 0; color: Qt.rgba(Commons.Color.popups.background.r,
+          Commons.Color.popups.background.g, Commons.Color.popups.background.b, 0) }
+        GradientStop { position: 1; color: Commons.Color.popups.background }
       }
     }
 
@@ -403,7 +404,7 @@ Item {
         elide: Text.ElideRight
         text: String(panel.lyricsData.error || "") !== ""
           ? String(panel.lyricsData.error) : "Текст этой песни недоступен"
-        color: String(panel.lyricsData.error || "") !== "" ? Color.urgent : root.dim
+        color: String(panel.lyricsData.error || "") !== "" ? Commons.Color.urgent : root.dim
         font.family: root.ff; font.pixelSize: Style.font.bodySmall
       }
       IconButton {
@@ -451,7 +452,7 @@ Item {
           anchors.verticalCenter: parent.verticalCenter
           text: String(lyricRow.modelData.text || "")
           wrapMode: Text.WordWrap
-          color: lyricRow.isCurrent ? Color.accent : root.fg
+          color: lyricRow.isCurrent ? Commons.Color.accent : root.fg
           opacity: !panel.lyricsData.synced || lyricRow.isCurrent ? 1
             : (lyricRow.distance <= 1 ? .9 : (lyricRow.distance <= 3 ? .6 : .35))
           font.family: root.ff
@@ -497,7 +498,7 @@ Item {
         horizontalAlignment: Text.AlignHCenter; wrapMode: Text.WordWrap
         text: String(panel.trackInfoData.error || "") !== ""
           ? String(panel.trackInfoData.error) : "Подробные сведения недоступны"
-        color: String(panel.trackInfoData.error || "") !== "" ? Color.urgent : root.dim
+        color: String(panel.trackInfoData.error || "") !== "" ? Commons.Color.urgent : root.dim
         font.family: root.ff; font.pixelSize: Style.font.bodySmall
       }
       IconButton {
@@ -568,7 +569,7 @@ Item {
           visible: String(panel.trackInfoData.album || "") !== ""
           width: parent.width; height: Style.space(56)
           color: albumMouse.containsMouse && String(panel.trackInfoData.albumId || "") !== ""
-            ? Style.hoverFillFor(root.fg, Color.accent) : "transparent"
+            ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent"
           CatalogImage {
             id: infoCover
             anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
@@ -674,7 +675,7 @@ Item {
             textFormat: Text.PlainText
             width: parent.width; horizontalAlignment: Text.AlignHCenter; wrapMode: Text.WordWrap
             text: String(panel.trackInfoData.error || "")
-            color: Color.urgent; font.family: root.ff; font.pixelSize: Style.font.caption
+            color: Commons.Color.urgent; font.family: root.ff; font.pixelSize: Style.font.caption
           }
           IconButton {
             anchors.horizontalCenter: parent.horizontalCenter

@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Signed-out flow: start → device code → expired code → done.
@@ -11,8 +12,8 @@ Item {
   readonly property color dim: panel.dim
   readonly property string ff: panel.fontFamily
   readonly property color lineColor: Qt.rgba(fg.r, fg.g, fg.b, .14)
-  readonly property color okColor: Color.accent
-  readonly property color badColor: Color.urgent
+  readonly property color okColor: Commons.Color.accent
+  readonly property color badColor: Commons.Color.urgent
   readonly property string stage: panel.authDone ? "done"
     : (panel.data.authPending === true ? "code"
       : (panel.data.authExpired === true ? "expired" : "start"))
@@ -36,7 +37,7 @@ Item {
     return Math.floor(total / 60) + ":" + String(total % 60).padStart(2, "0")
   }
 
-  Rectangle { anchors.fill: parent; color: Color.popups.background }
+  Rectangle { anchors.fill: parent; color: Commons.Color.popups.background }
 
   Timer {
     interval: 1000; repeat: true
@@ -54,19 +55,19 @@ Item {
     height: Style.space(38)
     radius: Style.cornerRadius
     opacity: enabled ? 1 : .5
-    color: primaryMouse.containsMouse ? Qt.lighter(Color.accent, 1.12) : Color.accent
+    color: primaryMouse.containsMouse ? Qt.lighter(Commons.Color.accent, 1.12) : Commons.Color.accent
     borderSpec: Border.none()
     Row {
       anchors.centerIn: parent
       spacing: Style.space(10)
       LucideIcon {
         anchors.verticalCenter: parent.verticalCenter
-        name: primary.icon; color: Color.background; size: Style.space(14)
+        name: primary.icon; color: Commons.Color.background; size: Style.space(14)
       }
       Text {
         textFormat: Text.PlainText
         anchors.verticalCenter: parent.verticalCenter
-        text: primary.label; color: Color.background
+        text: primary.label; color: Commons.Color.background
         font.family: root.ff; font.pixelSize: Style.font.bodySmall + Style.space(1); font.bold: true
       }
       BorderSurface {
@@ -74,13 +75,13 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: Math.max(Style.space(18), keyText.implicitWidth + Style.space(10)); height: Style.space(16)
         radius: 0; color: "transparent"
-        borderSpec: Border.controlSpec("normal", Color.background, Color.background)
+        borderSpec: Border.controlSpec("normal", Commons.Color.background, Commons.Color.background)
         opacity: .6
         Text {
           id: keyText
           textFormat: Text.PlainText
           anchors.centerIn: parent
-          text: primary.keyHint; color: Color.background
+          text: primary.keyHint; color: Commons.Color.background
           font.family: root.ff; font.pixelSize: Style.font.caption
         }
       }
@@ -104,10 +105,10 @@ Item {
       spacing: Style.space(14)
       Rectangle {
         width: Style.space(48); height: width; radius: width / 2
-        color: "transparent"; border.width: 1; border.color: Color.accent
+        color: "transparent"; border.width: 1; border.color: Commons.Color.accent
         LucideIcon {
           anchors.centerIn: parent
-          name: "audio-lines"; color: Color.accent; size: Style.space(22)
+          name: "audio-lines"; color: Commons.Color.accent; size: Style.space(22)
         }
       }
       Column {
@@ -131,7 +132,7 @@ Item {
     BorderSurface {
       visible: root.stage === "start"
       width: parent.width; height: featureColumn.implicitHeight + Style.space(28)
-      color: Style.normalFillFor(root.fg, Color.accent)
+      color: Style.normalFillFor(root.fg, Commons.Color.accent)
       borderSpec: Border.none()
       Column {
         id: featureColumn
@@ -147,7 +148,7 @@ Item {
             spacing: Style.space(10)
             LucideIcon {
               anchors.verticalCenter: parent.verticalCenter
-              name: modelData.icon; color: Color.accent; size: Style.space(14)
+              name: modelData.icon; color: Commons.Color.accent; size: Style.space(14)
             }
             Text {
               textFormat: Text.PlainText
@@ -183,8 +184,8 @@ Item {
         Rectangle {
           anchors.verticalCenter: parent.verticalCenter
           width: Style.space(18); height: width; radius: width / 2
-          color: Color.accent; border.width: 1; border.color: Color.accent
-          LucideIcon { anchors.centerIn: parent; name: "check"; color: Color.background; size: Style.space(10); strokeWidth: 3 }
+          color: Commons.Color.accent; border.width: 1; border.color: Commons.Color.accent
+          LucideIcon { anchors.centerIn: parent; name: "check"; color: Commons.Color.background; size: Style.space(10); strokeWidth: 3 }
         }
         Text {
           textFormat: Text.PlainText
@@ -193,18 +194,18 @@ Item {
           font.family: root.ff; font.pixelSize: Style.font.caption
         }
       }
-      Rectangle { anchors.verticalCenter: parent.verticalCenter; width: Style.space(22); height: 1; color: Color.accent }
+      Rectangle { anchors.verticalCenter: parent.verticalCenter; width: Style.space(22); height: 1; color: Commons.Color.accent }
       Row {
         spacing: Style.space(6)
         Rectangle {
           anchors.verticalCenter: parent.verticalCenter
           width: Style.space(18); height: width; radius: width / 2
-          color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .2)
-          border.width: 1; border.color: Color.accent
+          color: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .2)
+          border.width: 1; border.color: Commons.Color.accent
           Text {
             textFormat: Text.PlainText
             anchors.centerIn: parent
-            text: "2"; color: Color.accent
+            text: "2"; color: Commons.Color.accent
             font.family: root.ff; font.pixelSize: Style.font.caption - 1; font.bold: true
           }
         }
@@ -242,9 +243,9 @@ Item {
     BorderSurface {
       visible: root.stage === "code" || root.stage === "expired"
       width: parent.width; height: codeColumn.implicitHeight + Style.space(32)
-      color: Style.normalFillFor(root.fg, Color.accent)
-      borderSpec: Border.controlSpec("normal", root.stage === "expired" ? root.badColor : Color.accent,
-        root.stage === "expired" ? root.badColor : Color.accent)
+      color: Style.normalFillFor(root.fg, Commons.Color.accent)
+      borderSpec: Border.controlSpec("normal", root.stage === "expired" ? root.badColor : Commons.Color.accent,
+        root.stage === "expired" ? root.badColor : Commons.Color.accent)
       Column {
         id: codeColumn
         anchors.left: parent.left; anchors.right: parent.right; anchors.top: parent.top
@@ -278,13 +279,13 @@ Item {
               BorderSurface {
                 width: Style.space(33); height: Style.space(40)
                 radius: Style.cornerRadius
-                color: Color.background
-                borderSpec: Border.controlSpec("normal", root.fg, Color.accent)
+                color: Commons.Color.background
+                borderSpec: Border.controlSpec("normal", root.fg, Commons.Color.accent)
                 Text {
                   textFormat: Text.PlainText
                   anchors.centerIn: parent
                   text: root.codeChars.length > 0 ? root.codeChars.charAt(charCell.index) : "·"
-                  color: root.stage === "expired" || root.codeChars.length === 0 ? root.dim : Color.accent
+                  color: root.stage === "expired" || root.codeChars.length === 0 ? root.dim : Commons.Color.accent
                   font.family: root.ff; font.pixelSize: Style.font.title + Style.space(4); font.bold: true
                 }
               }
@@ -303,20 +304,20 @@ Item {
         width: Style.space(153); height: Style.space(38)
         radius: Style.cornerRadius
         opacity: root.stage === "code" && root.hasCode ? 1 : .5
-        color: copyMouse.containsMouse ? Style.hoverFillFor(root.fg, Color.accent) : "transparent"
-        borderSpec: Border.controlSpec("normal", root.fg, Color.accent)
+        color: copyMouse.containsMouse ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent"
+        borderSpec: Border.controlSpec("normal", root.fg, Commons.Color.accent)
         Row {
           anchors.centerIn: parent
           spacing: Style.space(10)
           LucideIcon {
             anchors.verticalCenter: parent.verticalCenter
             name: copyButton.copied ? "check" : "copy"
-            color: copyButton.copied ? Color.accent : root.fg; size: Style.space(14)
+            color: copyButton.copied ? Commons.Color.accent : root.fg; size: Style.space(14)
           }
           Text {
             textFormat: Text.PlainText
             anchors.verticalCenter: parent.verticalCenter
-            text: copyButton.copied ? "Скопировано" : "Копировать"; color: copyButton.copied ? Color.accent : root.fg
+            text: copyButton.copied ? "Скопировано" : "Копировать"; color: copyButton.copied ? Commons.Color.accent : root.fg
             font.family: root.ff; font.pixelSize: Style.font.bodySmall + Style.space(1); font.bold: true
           }
           BorderSurface {
@@ -324,7 +325,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             width: Style.space(18); height: Style.space(16)
             radius: 0; color: "transparent"
-            borderSpec: Border.controlSpec("normal", root.fg, Color.accent)
+            borderSpec: Border.controlSpec("normal", root.fg, Commons.Color.accent)
             Text {
               textFormat: Text.PlainText
               anchors.centerIn: parent
@@ -357,7 +358,7 @@ Item {
         id: waitIcon
         anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
         name: root.stage === "expired" ? "timer-off" : "loader-circle"
-        color: root.stage === "expired" ? root.badColor : Color.accent; size: Style.space(14)
+        color: root.stage === "expired" ? root.badColor : Commons.Color.accent; size: Style.space(14)
         RotationAnimator on rotation {
           running: root.stage === "code" && root.visible
           from: 0; to: 360; duration: 1000; loops: Animation.Infinite
@@ -399,10 +400,10 @@ Item {
       visible: root.stage === "done"
       anchors.horizontalCenter: parent.horizontalCenter
       width: Style.space(72); height: width; radius: width / 2
-      color: Color.accent
+      color: Commons.Color.accent
       LucideIcon {
         anchors.centerIn: parent
-        name: "check"; color: Color.background; size: Style.space(30); strokeWidth: 2.5
+        name: "check"; color: Commons.Color.background; size: Style.space(30); strokeWidth: 2.5
       }
     }
     Text {
@@ -418,7 +419,7 @@ Item {
       width: parent.width; horizontalAlignment: Text.AlignHCenter; elide: Text.ElideRight
       text: [String(root.panel.data.authLogin || ""), root.panel.data.authPlus === true ? "Яндекс Плюс" : ""]
         .filter(function(part) { return part !== "" }).join(" · ")
-      color: Color.accent; font.family: root.ff; font.pixelSize: Style.font.bodySmall
+      color: Commons.Color.accent; font.family: root.ff; font.pixelSize: Style.font.bodySmall
     }
     Text {
       textFormat: Text.PlainText

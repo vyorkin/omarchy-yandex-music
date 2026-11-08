@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 
 // Label (+ optional description) on the left, any control on the right and a
 // hairline divider below. Children are placed in the control slot.
@@ -8,7 +9,7 @@ Item {
 
   property string label: ""
   property string description: ""
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.darker(foreground, 1.5)
   property string fontFamily: Style.font.family
   property bool divider: true

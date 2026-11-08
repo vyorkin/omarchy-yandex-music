@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Wide layout navigation: pages, library shortcuts, settings and layout footer.
@@ -109,10 +110,10 @@ Item {
         Rectangle {
           anchors.centerIn: parent
           width: Style.space(37); height: Style.space(37); radius: 0
-          color: layoutButton.showingPress ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .18)
-            : layoutButton.hovered ? Style.hoverFillFor(root.fg, Color.accent) : "transparent"
+          color: layoutButton.showingPress ? Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .18)
+            : layoutButton.hovered ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent"
           border.width: layoutButton.showingPress || layoutButton.keyboardFocus || layoutButton.hovered ? 1 : 0
-          border.color: layoutButton.showingPress || layoutButton.keyboardFocus ? Color.accent
+          border.color: layoutButton.showingPress || layoutButton.keyboardFocus ? Commons.Color.accent
             : Qt.rgba(root.fg.r, root.fg.g, root.fg.b, .08)
         }
       }
@@ -120,7 +121,7 @@ Item {
         LucideIcon {
           anchors.centerIn: parent
           glyph: "󰊔"; size: Style.space(14); fontFamily: root.ff
-          color: layoutButton.showingPress ? Color.accent
+          color: layoutButton.showingPress ? Commons.Color.accent
             : layoutButton.hovered || layoutButton.keyboardFocus ? root.fg : root.dim
         }
       }
@@ -138,7 +139,7 @@ Item {
         padding: 0
         background: Rectangle {
           radius: Style.space(4)
-          color: Qt.tint(Color.background, Style.hoverFillFor(root.fg, Color.accent))
+          color: Qt.tint(Commons.Color.background, Style.hoverFillFor(root.fg, Commons.Color.accent))
           border.width: 1; border.color: Qt.rgba(root.fg.r, root.fg.g, root.fg.b, .08)
         }
         contentItem: Row {

@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Persistent player strip. `wide` sits under the wide layout's pages,
@@ -24,7 +25,7 @@ Item {
   Rectangle {
     visible: !root.isPopup
     anchors.fill: parent
-    color: Style.normalFillFor(root.fg, Color.accent)
+    color: Style.normalFillFor(root.fg, Commons.Color.accent)
   }
   Rectangle {
     visible: !root.isPopup
@@ -39,7 +40,7 @@ Item {
     anchors.bottom: root.isPopup ? parent.bottom : undefined
     height: root.isPopup ? Style.space(3) : Style.space(2)
     color: Qt.rgba(root.fg.r, root.fg.g, root.fg.b, .12)
-    Rectangle { width: parent.width * root.fraction; height: parent.height; color: Color.accent }
+    Rectangle { width: parent.width * root.fraction; height: parent.height; color: Commons.Color.accent }
   }
 
   CatalogImage {
@@ -96,7 +97,7 @@ Item {
       width: Style.space(32); height: Style.space(32)
       horizontalPadding: 0; verticalPadding: 0; iconSize: Style.space(16)
       iconText: panel.data.liked ? "󰋑" : "󰋕"
-      foreground: panel.data.liked ? Color.accent : root.fg
+      foreground: panel.data.liked ? Commons.Color.accent : root.fg
       enabled: panel.hasTrack
       onClicked: panel.transport("toggleLike")
     }
@@ -143,7 +144,7 @@ Item {
       width: Style.space(32); height: Style.space(32); anchors.verticalCenter: parent.verticalCenter
       horizontalPadding: 0; verticalPadding: 0; iconSize: Style.space(16)
       iconText: panel.data.liked ? "󰋑" : "󰋕"
-      foreground: panel.data.liked ? Color.accent : root.fg
+      foreground: panel.data.liked ? Commons.Color.accent : root.fg
       enabled: panel.hasTrack
       onClicked: panel.transport("toggleLike")
     }

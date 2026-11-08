@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Главная медиатеки, разделы и настройки Волны; переходами управляет родитель.
@@ -104,17 +105,17 @@ Item {
     property bool trailing: !root.wide
     signal clicked()
     height: Style.space(primary ? 60 : root.wide ? 52 : 44)
-    color: primary ? Style.selectedFillFor(root.foreground, Color.accent)
-      : cardMouse.containsMouse ? Style.hoverFillFor(root.foreground, Color.accent)
-      : root.wide ? Style.normalFillFor(root.foreground, Color.accent) : "transparent"
-    Rectangle { visible: card.primary; width: Style.space(2); height: parent.height; color: Color.accent }
+    color: primary ? Style.selectedFillFor(root.foreground, Commons.Color.accent)
+      : cardMouse.containsMouse ? Style.hoverFillFor(root.foreground, Commons.Color.accent)
+      : root.wide ? Style.normalFillFor(root.foreground, Commons.Color.accent) : "transparent"
+    Rectangle { visible: card.primary; width: Style.space(2); height: parent.height; color: Commons.Color.accent }
     Rectangle {
       id: cardIcon
       x: Style.space(card.primary ? 14 : root.wide ? 12 : 4)
       anchors.verticalCenter: parent.verticalCenter
       width: Style.space(card.primary ? 20 : 36); height: width
-      color: card.primary ? "transparent" : Style.selectedFillFor(root.foreground, Color.accent)
-      LucideIcon { anchors.centerIn: parent; glyph: card.glyph; color: Color.accent; fontFamily: root.fontFamily; size: Style.space(card.primary ? 18 : 16) }
+      color: card.primary ? "transparent" : Style.selectedFillFor(root.foreground, Commons.Color.accent)
+      LucideIcon { anchors.centerIn: parent; glyph: card.glyph; color: Commons.Color.accent; fontFamily: root.fontFamily; size: Style.space(card.primary ? 18 : 16) }
     }
     Column {
       anchors.left: cardIcon.right; anchors.leftMargin: Style.space(12)
@@ -125,7 +126,7 @@ Item {
     }
     LucideIcon {
       visible: card.trailing; anchors.right: parent.right; anchors.rightMargin: Style.space(12); anchors.verticalCenter: parent.verticalCenter
-      glyph: card.primary ? "󰐊" : "󰅂"; color: card.primary ? Color.accent : root.dim; fontFamily: root.fontFamily; size: Style.space(16)
+      glyph: card.primary ? "󰐊" : "󰅂"; color: card.primary ? Commons.Color.accent : root.dim; fontFamily: root.fontFamily; size: Style.space(16)
     }
     MouseArea { id: cardMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: card.clicked() }
   }
@@ -137,13 +138,13 @@ Item {
     property bool selected: false
     signal clicked()
     height: Style.space(28)
-    color: selected ? Style.selectedFillFor(root.foreground, Color.accent)
-      : choiceMouse.containsMouse ? Style.hoverFillFor(root.foreground, Color.accent) : "transparent"
-    borderSpec: Border.controlSpec(selected ? "selected" : "normal", root.foreground, Color.accent)
+    color: selected ? Style.selectedFillFor(root.foreground, Commons.Color.accent)
+      : choiceMouse.containsMouse ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : "transparent"
+    borderSpec: Border.controlSpec(selected ? "selected" : "normal", root.foreground, Commons.Color.accent)
     opacity: root.settingsRunning ? .5 : 1
     Row {
       anchors.centerIn: parent; spacing: Style.space(6)
-      LucideIcon { visible: choice.glyph !== ""; glyph: choice.glyph; color: choice.selected ? Color.accent : root.dim; size: Style.space(12); anchors.verticalCenter: parent.verticalCenter }
+      LucideIcon { visible: choice.glyph !== ""; glyph: choice.glyph; color: choice.selected ? Commons.Color.accent : root.dim; size: Style.space(12); anchors.verticalCenter: parent.verticalCenter }
       Text { textFormat: Text.PlainText; text: choice.label; color: choice.selected ? root.foreground : root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption; anchors.verticalCenter: parent.verticalCenter }
     }
     MouseArea { id: choiceMouse; anchors.fill: parent; hoverEnabled: true; enabled: !root.settingsRunning; cursorShape: Qt.PointingHandCursor; onClicked: if (!choice.selected) choice.clicked() }
@@ -168,8 +169,8 @@ Item {
       Rectangle {
         visible: root.wide
         width: parent.width; height: visible ? Style.space(200) : 0
-        color: Style.normalFillFor(root.foreground, Color.accent)
-        Rectangle { width: Style.space(2); height: parent.height; color: Color.accent }
+        color: Style.normalFillFor(root.foreground, Commons.Color.accent)
+        Rectangle { width: Style.space(2); height: parent.height; color: Commons.Color.accent }
         Item {
           id: inlineWaveHero
           width: Style.space(250); height: parent.height
@@ -179,8 +180,8 @@ Item {
             width: Style.space(60); height: width; radius: width / 2
             horizontalPadding: 0; verticalPadding: 0
             iconText: root.waveActive ? (root.wavePlaying ? "󰏤" : "󰐊") : "󰐷"
-            iconSize: Style.space(22); foreground: Color.accent; bordered: true
-            background: Style.selectedFillFor(root.foreground, Color.accent)
+            iconSize: Style.space(22); foreground: Commons.Color.accent; bordered: true
+            background: Style.selectedFillFor(root.foreground, Commons.Color.accent)
             enabled: !root.waveLoading
             tooltipText: root.waveActive ? (root.wavePlaying ? "Пауза" : "Продолжить") : "Запустить Мою волну"
             onClicked: root.waveActive ? root.wavePlaybackRequested() : root.waveRequested()
@@ -190,7 +191,7 @@ Item {
             anchors.right: parent.right; anchors.rightMargin: Style.space(16)
             anchors.verticalCenter: waveOrb.verticalCenter; spacing: Style.space(5)
             Text { textFormat: Text.PlainText; width: parent.width; elide: Text.ElideRight; text: "Моя волна"; color: root.foreground; font.family: root.fontFamily; font.pixelSize: Style.font.title; font.bold: true }
-            Text { textFormat: Text.PlainText; width: parent.width; elide: Text.ElideRight; text: root.waveLoading ? "подключаем…" : root.waveActive ? (root.wavePlaying ? "играет сейчас" : "на паузе") : "под ваш вкус"; color: root.waveActive ? Color.accent : root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
+            Text { textFormat: Text.PlainText; width: parent.width; elide: Text.ElideRight; text: root.waveLoading ? "подключаем…" : root.waveActive ? (root.wavePlaying ? "играет сейчас" : "на паузе") : "под ваш вкус"; color: root.waveActive ? Commons.Color.accent : root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption }
           }
           Text {
             textFormat: Text.PlainText
@@ -201,7 +202,7 @@ Item {
           IconButton {
             x: Style.space(20); y: Style.space(150); width: parent.width - Style.space(40); height: Style.space(34)
             text: root.waveActive ? "Перезапустить" : "Запустить"; iconText: "󰐊"; fontSize: Style.font.caption
-            foreground: Color.accent; bordered: true; enabled: !root.waveLoading && !root.settingsRunning
+            foreground: Commons.Color.accent; bordered: true; enabled: !root.waveLoading && !root.settingsRunning
             onClicked: root.waveRequested()
           }
         }
@@ -301,7 +302,7 @@ Item {
               Rectangle {
                 id: personalCover
                 width: parent.width; height: Style.space(root.wide ? 96 : 80)
-                color: personalMouse.containsMouse && personalCard.available ? Style.hoverFillFor(root.foreground, Color.accent) : Style.selectedFillFor(root.foreground, Color.accent)
+                color: personalMouse.containsMouse && personalCard.available ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : Style.selectedFillFor(root.foreground, Commons.Color.accent)
                 LucideIcon { anchors.centerIn: parent; glyph: personalCard.modelData.glyph; size: Style.space(root.wide ? 28 : 22); color: root.dim; fontFamily: root.fontFamily }
                 CatalogImage { anchors.fill: parent; requestedSource: personalCard.value ? String(personalCard.value.artUrl || "") : ""; foreground: root.foreground; fontFamily: root.fontFamily; fillMode: Image.PreserveAspectCrop }
               }
@@ -333,7 +334,7 @@ Item {
           visible: String(root.controller.snapshot.error || root.controller.snapshot.warning || "") !== ""
           width: parent.width; wrapMode: Text.WordWrap
           text: String(root.controller.snapshot.error || root.controller.snapshot.warning || "")
-          color: root.controller.snapshot.error ? Color.urgent : root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption
+          color: root.controller.snapshot.error ? Commons.Color.urgent : root.dim; font.family: root.fontFamily; font.pixelSize: Style.font.caption
         }
       }
 
@@ -361,8 +362,8 @@ Item {
           visible: !root.wide; width: parent.width; height: visible ? Style.space(44) : 0
           Rectangle {
             x: Style.space(4); anchors.verticalCenter: parent.verticalCenter; width: Style.space(36); height: width
-            color: Style.selectedFillFor(root.foreground, Color.accent)
-            LucideIcon { anchors.centerIn: parent; glyph: "󰀥"; size: Style.space(16); color: Color.accent }
+            color: Style.selectedFillFor(root.foreground, Commons.Color.accent)
+            LucideIcon { anchors.centerIn: parent; glyph: "󰀥"; size: Style.space(16); color: Commons.Color.accent }
           }
           Column {
             x: Style.space(52); anchors.verticalCenter: parent.verticalCenter; spacing: Style.space(2)
@@ -374,7 +375,7 @@ Item {
                   required property var modelData
                   required property int index
                   textFormat: Text.PlainText
-                  text: (index === 0 ? "" : "· ") + modelData.title; color: albumArtistMouse.containsMouse ? Color.accent : root.foreground
+                  text: (index === 0 ? "" : "· ") + modelData.title; color: albumArtistMouse.containsMouse ? Commons.Color.accent : root.foreground
                   font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
                   MouseArea { id: albumArtistMouse; anchors.fill: parent; hoverEnabled: true; cursorShape: Qt.PointingHandCursor; onClicked: root.controller.openSection(parent.modelData.section) }
                 }
@@ -414,17 +415,17 @@ Item {
         id: historyCover
         width: Style.space(104); height: width
         radius: Style.cornerRadius
-        color: Style.selectedFillFor(root.foreground, Color.accent)
+        color: Style.selectedFillFor(root.foreground, Commons.Color.accent)
         LucideIcon {
           anchors.centerIn: parent
-          name: "history"; color: Color.accent; size: Style.space(36)
+          name: "history"; color: Commons.Color.accent; size: Style.space(36)
         }
       }
       Column {
         anchors.left: historyCover.right; anchors.leftMargin: Style.space(20)
         anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
         spacing: Style.space(8)
-        SectionLabel { text: "РАЗДЕЛ"; color: Color.accent }
+        SectionLabel { text: "РАЗДЕЛ"; color: Commons.Color.accent }
         Text {
           textFormat: Text.PlainText
           width: parent.width; elide: Text.ElideRight
@@ -546,7 +547,7 @@ Item {
         radius: Style.cornerRadius
         opacity: libraryRow.value.available === false ? .45 : 1
         color: actionable && libraryRow.value.available !== false && libraryRow.hovered
-          ? Style.hoverFillFor(root.foreground, Color.accent) : "transparent"
+          ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : "transparent"
         borderSpec: Border.none()
 
         HoverHandler { id: libraryHover }
@@ -557,8 +558,8 @@ Item {
           anchors.left: parent.left; anchors.right: parent.right
           anchors.margins: Style.space(10); anchors.verticalCenter: parent.verticalCenter
           text: String(libraryRow.modelData.title || "")
-          color: libraryRow.rowKind === "error" ? Color.urgent
-            : (["retry", "loadMore"].indexOf(libraryRow.rowKind) >= 0 ? Color.accent : root.dim)
+          color: libraryRow.rowKind === "error" ? Commons.Color.urgent
+            : (["retry", "loadMore"].indexOf(libraryRow.rowKind) >= 0 ? Commons.Color.accent : root.dim)
           horizontalAlignment: ["retry", "loadMore", "empty"].indexOf(libraryRow.rowKind) >= 0
             ? Text.AlignHCenter : Text.AlignLeft
           elide: Text.ElideRight
@@ -630,7 +631,7 @@ Item {
               horizontalPadding: 0; verticalPadding: 0
               iconText: "󰐒"; iconSize: Style.font.icon
               tooltipText: "В плейлист…"
-              foreground: hot ? Color.accent : root.dim
+              foreground: hot ? Commons.Color.accent : root.dim
               onClicked: root.collectionTrackRequested(
                 Number(libraryRow.value.trackIndex || 0), libraryRow.value, libraryTrackAction)
             }
@@ -681,11 +682,11 @@ Item {
           objectName: "waveHero"
           width: root.wide ? Style.space(280) : parent.width
           height: root.wide ? parent.height : Style.space(270)
-          color: Style.normalFillFor(root.foreground, Color.accent)
+          color: Style.normalFillFor(root.foreground, Commons.Color.accent)
 
           Canvas {
             anchors.fill: parent
-            property color accent: Color.accent
+            property color accent: Commons.Color.accent
             onAccentChanged: requestPaint()
             onWidthChanged: requestPaint()
             onHeightChanged: requestPaint()
@@ -710,11 +711,11 @@ Item {
               width: Style.space(root.wide ? 150 : 88); height: width; radius: width / 2
               color: "transparent"
               border.width: 1
-              border.color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .2)
+              border.color: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .2)
               Canvas {
                 anchors.centerIn: parent
                 width: Style.space(root.wide ? 104 : 64); height: width
-                property color accent: Color.accent
+                property color accent: Commons.Color.accent
                 onAccentChanged: requestPaint()
                 onWidthChanged: requestPaint()
                 onPaint: {
@@ -730,7 +731,7 @@ Item {
                 }
                 LucideIcon {
                   anchors.centerIn: parent
-                  glyph: "󰐹"; color: Color.background
+                  glyph: "󰐹"; color: Commons.Color.background
                   size: Style.space(root.wide ? 34 : 26)
                 }
               }
@@ -762,7 +763,7 @@ Item {
             text: root.settingsRunning ? "Сохраняем…" : root.waveLoading ? "Подключаем…" : "Запустить  ⏎"
             iconText: "󰐊"; iconSize: Style.space(14); fontSize: Style.space(12)
             fontFamily: root.fontFamily
-            foreground: Color.background; background: Color.accent
+            foreground: Commons.Color.background; background: Commons.Color.accent
             focusable: true
             enabled: !root.settingsRunning && !root.waveLoading
             onClicked: root.waveRequested()

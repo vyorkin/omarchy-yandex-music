@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 
 // Seekable progress track. Seeking is previewed while dragging and committed
 // by Panel on release; `showTimes` draws position/duration below the track.
@@ -24,7 +25,7 @@ Item {
     Rectangle {
       width: parent.width * root.fraction
       height: parent.height
-      color: Color.accent
+      color: Commons.Color.accent
     }
     MouseArea {
       id: seekDrag

@@ -1,13 +1,14 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 
 Item {
   id: root
 
   property var breadcrumbs: []
   property bool wide: false
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.darker(foreground, 1.5)
   property string fontFamily: Style.font.family
   property string contextIcon: ""
@@ -39,7 +40,7 @@ Item {
   Rectangle {
     visible: !root.wide
     anchors.fill: parent
-    color: Style.normalFillFor(root.foreground, Color.accent)
+    color: Style.normalFillFor(root.foreground, Commons.Color.accent)
   }
   Rectangle {
     visible: !root.wide

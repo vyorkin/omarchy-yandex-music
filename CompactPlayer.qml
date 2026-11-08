@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Compact layout "Now" header: 72 px hero and one-line transport.
@@ -25,7 +26,7 @@ Item {
       anchors.left: parent.left; anchors.leftMargin: Style.space(16)
       anchors.top: parent.top; anchors.topMargin: Style.space(16)
       width: Style.space(72); height: width
-      color: Style.selectedFillFor(root.fg, Color.accent)
+      color: Style.selectedFillFor(root.fg, Commons.Color.accent)
       clip: true
       CatalogImage {
         anchors.fill: parent
@@ -65,7 +66,7 @@ Item {
               required property var modelData
               required property int index
               text: modelData.name + (index < (panel.data.artists || []).length - 1 ? ", " : "")
-              color: Color.accent
+              color: Commons.Color.accent
               font.family: root.ff; font.pixelSize: Style.font.bodySmall + Style.space(1)
               font.underline: heroArtistMouse.containsMouse
               MouseArea {
@@ -83,7 +84,7 @@ Item {
         text: panel.hasTrack ? String(panel.data.album || panel.data.queueName || "")
           : (panel.authenticated ? "Выберите музыку" : "Автономный плеер")
         color: heroAlbumMouse.containsMouse && String(panel.data.albumId || "") !== ""
-          ? Color.accent : root.dim
+          ? Commons.Color.accent : root.dim
         font.family: root.ff; font.pixelSize: Style.font.bodySmall
         MouseArea {
           id: heroAlbumMouse; anchors.fill: parent
@@ -102,7 +103,7 @@ Item {
       horizontalPadding: 0; verticalPadding: 0; iconSize: Style.space(18)
       iconText: panel.data.liked ? "󰋑" : "󰋕"
       tooltipText: panel.data.liked ? "Убрать из «Мне нравится» (L)" : "Добавить в «Мне нравится» (L)"
-      foreground: panel.data.liked ? Color.accent : root.fg
+      foreground: panel.data.liked ? Commons.Color.accent : root.fg
       enabled: panel.hasTrack; opacity: enabled ? 1 : .4
       onClicked: panel.transport("toggleLike")
     }
@@ -165,9 +166,9 @@ Item {
         width: Style.space(220); padding: Style.space(8)
         focus: false
         background: BorderSurface {
-          color: Color.popups.background
+          color: Commons.Color.popups.background
           radius: Style.cornerRadius
-          borderSpec: Border.controlSpec("focus", root.fg, Color.accent)
+          borderSpec: Border.controlSpec("focus", root.fg, Commons.Color.accent)
         }
         contentItem: VolumeControl {
           id: volumeControl

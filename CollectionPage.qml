@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 
 // Коллекция никогда не подменяет очередь до явного выбора трека или кнопки.
 Item {
@@ -58,8 +59,8 @@ Item {
       width: Style.space(root.wide ? 112 : 72); height: width
       anchors.verticalCenter: parent.verticalCenter
       gradient: Gradient {
-        GradientStop { position: 0; color: Qt.lighter(Color.accent, 1.25) }
-        GradientStop { position: 1; color: Qt.darker(Color.accent, 1.3) }
+        GradientStop { position: 0; color: Qt.lighter(Commons.Color.accent, 1.25) }
+        GradientStop { position: 1; color: Qt.darker(Commons.Color.accent, 1.3) }
       }
       CatalogImage {
         anchors.fill: parent
@@ -82,7 +83,7 @@ Item {
       spacing: Style.space(root.wide ? 8 : 5)
       Text {
         textFormat: Text.PlainText
-        text: "ПЛЕЙЛИСТ"; color: Color.accent
+        text: "ПЛЕЙЛИСТ"; color: Commons.Color.accent
         font.family: root.ff; font.pixelSize: Style.space(root.wide ? 10 : 9); font.letterSpacing: 1.5
       }
       Text {
@@ -113,7 +114,7 @@ Item {
         required property var modelData
         width: root.wide ? Style.space(modelData.mode === "order" ? 96 : 103) : (hero.width - buttons.spacing) / 2
         height: buttons.height
-        color: modelData.mode === "order" ? Color.accent : "transparent"
+        color: modelData.mode === "order" ? Commons.Color.accent : "transparent"
         border.width: modelData.mode === "order" ? 0 : 1
         border.color: Qt.rgba(root.fg.r, root.fg.g, root.fg.b, .12)
         opacity: playMouse.enabled ? 1 : .45
@@ -121,12 +122,12 @@ Item {
           anchors.centerIn: parent; spacing: Style.space(5)
           LucideIcon {
             name: playAction.modelData.icon; size: Style.space(12)
-            color: playAction.modelData.mode === "order" ? Color.background : root.fg
+            color: playAction.modelData.mode === "order" ? Commons.Color.background : root.fg
           }
           Text {
             textFormat: Text.PlainText
             text: playAction.modelData.label
-            color: playAction.modelData.mode === "order" ? Color.background : root.fg
+            color: playAction.modelData.mode === "order" ? Commons.Color.background : root.fg
             font.family: root.ff; font.pixelSize: Style.space(11)
           }
         }
@@ -155,7 +156,7 @@ Item {
       id: row
       required property var modelData
       width: list.width; height: Style.space(root.wide ? 48 : 44)
-      color: hover.hovered ? Style.hoverFillFor(root.fg, Color.accent) : "transparent"
+      color: hover.hovered ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent"
       HoverHandler { id: hover }
       MouseArea {
         anchors.fill: parent; anchors.rightMargin: Style.space(42)
@@ -196,7 +197,7 @@ Item {
                 required property int index
                 textFormat: Text.PlainText
                 text: String(modelData.name || "") + (index < (row.modelData.artists || []).length - 1 ? ", " : "")
-                color: artistMouse.containsMouse ? Color.accent : root.dim
+                color: artistMouse.containsMouse ? Commons.Color.accent : root.dim
                 font.family: root.ff; font.pixelSize: Style.space(10)
                 MouseArea {
                   id: artistMouse; anchors.fill: parent; hoverEnabled: true
@@ -210,7 +211,7 @@ Item {
               textFormat: Text.PlainText
               visible: String(row.modelData.album || "") !== ""
               text: " · " + String(row.modelData.album || "")
-              color: albumMouse.containsMouse ? Color.accent : root.dim
+              color: albumMouse.containsMouse ? Commons.Color.accent : root.dim
               font.family: root.ff; font.pixelSize: Style.space(10)
               MouseArea {
                 id: albumMouse; anchors.fill: parent; hoverEnabled: true

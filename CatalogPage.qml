@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Поиск и страницы сущностей; навигационным стеком управляет родитель.
@@ -195,7 +196,7 @@ Item {
     id: link
     signal clicked()
     textFormat: Text.PlainText
-    color: linkMouse.containsMouse ? Color.accent : root.dim
+    color: linkMouse.containsMouse ? Commons.Color.accent : root.dim
     font.family: root.fontFamily; font.pixelSize: Style.font.caption
     MouseArea {
       id: linkMouse
@@ -210,8 +211,8 @@ Item {
     horizontalPadding: Style.space(14)
     fontSize: Style.font.bodySmall
     bordered: true
-    foreground: primary ? Color.accent : root.foreground
-    background: primary ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .22) : "transparent"
+    foreground: primary ? Commons.Color.accent : root.foreground
+    background: primary ? Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .22) : "transparent"
   }
   component TrackLine: BorderSurface {
     id: line
@@ -222,7 +223,7 @@ Item {
     readonly property bool hovered: lineHover.hovered
     height: Style.space(52)
     radius: Style.cornerRadius
-    color: hovered ? Style.hoverFillFor(root.foreground, Color.accent) : "transparent"
+    color: hovered ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : "transparent"
     borderSpec: Border.none()
     HoverHandler { id: lineHover }
     Text {
@@ -268,7 +269,7 @@ Item {
               required property var modelData
               required property int index
               text: modelData.name + (index < (line.value.artists || []).length - 1 ? ", " : "")
-              color: lineArtistMouse.containsMouse ? Color.accent : root.dim
+              color: lineArtistMouse.containsMouse ? Commons.Color.accent : root.dim
               font.family: root.fontFamily; font.pixelSize: Style.font.caption
               MouseArea {
                 id: lineArtistMouse; anchors.fill: parent; hoverEnabled: true
@@ -281,7 +282,7 @@ Item {
             textFormat: Text.PlainText
             visible: String(line.value.album || "") !== ""
             text: (line.value.artists || []).length > 0 ? " · " + String(line.value.album) : String(line.value.album)
-            color: lineAlbumMouse.containsMouse && String(line.value.albumId || "") !== "" ? Color.accent : root.dim
+            color: lineAlbumMouse.containsMouse && String(line.value.albumId || "") !== "" ? Commons.Color.accent : root.dim
             font.family: root.fontFamily; font.pixelSize: Style.font.caption
             MouseArea {
               id: lineAlbumMouse; anchors.fill: parent
@@ -316,7 +317,7 @@ Item {
         horizontalPadding: 0; verticalPadding: 0
         iconText: "󰐒"; iconSize: Style.font.icon
         tooltipText: "В плейлист…"
-        foreground: hot ? Color.accent : root.dim
+        foreground: hot ? Commons.Color.accent : root.dim
         onClicked: root.collectionTrackRequested(
           line.source === "entity" ? "catalogEntity" : "catalogSearch",
           Number(line.value.index || 0), line.value, lineTrackAction)
@@ -350,7 +351,7 @@ Item {
       anchors.top: bubbleImage.bottom; anchors.topMargin: Style.space(8)
       width: parent.width; elide: Text.ElideRight; horizontalAlignment: Text.AlignHCenter
       text: String(bubble.value.name || bubble.value.title || "")
-      color: bubbleMouse.containsMouse ? Color.accent : root.dim
+      color: bubbleMouse.containsMouse ? Commons.Color.accent : root.dim
       font.family: root.fontFamily; font.pixelSize: Style.font.caption
     }
     MouseArea {
@@ -378,7 +379,7 @@ Item {
       anchors.top: cardImage.bottom; anchors.topMargin: Style.space(6)
       width: parent.width; elide: Text.ElideRight
       text: String(card.value.title || card.value.name || "")
-      color: cardMouse.containsMouse ? Color.accent : root.foreground
+      color: cardMouse.containsMouse ? Commons.Color.accent : root.foreground
       font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall; font.bold: true
     }
     Text {
@@ -446,7 +447,7 @@ Item {
         z: 2
         anchors.left: parent.left; anchors.leftMargin: Style.space(12)
         anchors.verticalCenter: parent.verticalCenter
-        glyph: "󰍉"; color: searchField.activeFocus ? Color.accent : root.dim
+        glyph: "󰍉"; color: searchField.activeFocus ? Commons.Color.accent : root.dim
         fontFamily: root.fontFamily; size: Style.font.icon
       }
       LucideIcon {
@@ -496,9 +497,9 @@ Item {
             : (chips.width - chips.spacing * 4) / (modelData.value === "all" ? 6 : 5) * (modelData.value === "all" ? 1 : 1)
           height: Style.space(30)
           radius: Style.cornerRadius
-          color: on ? Style.selectedFillFor(root.foreground, Color.accent)
-            : (chipMouse.containsMouse ? Style.hoverFillFor(root.foreground, Color.accent) : "transparent")
-          borderSpec: Border.controlSpec(on ? "selected" : "normal", root.foreground, Color.accent)
+          color: on ? Style.selectedFillFor(root.foreground, Commons.Color.accent)
+            : (chipMouse.containsMouse ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : "transparent")
+          borderSpec: Border.controlSpec(on ? "selected" : "normal", root.foreground, Commons.Color.accent)
           Row {
             id: chipRow
             anchors.centerIn: parent
@@ -562,7 +563,7 @@ Item {
         SectionLabel { text: "ЛУЧШИЙ РЕЗУЛЬТАТ" }
         BorderSurface {
           width: parent.width; height: bestColumn.implicitHeight + Style.space(32)
-          color: Style.normalFillFor(root.foreground, Color.accent)
+          color: Style.normalFillFor(root.foreground, Commons.Color.accent)
           borderSpec: Border.none()
           Column {
             id: bestColumn
@@ -677,7 +678,7 @@ Item {
           textFormat: Text.PlainText
           visible: String(root.search.error || "") !== ""
           width: parent.width; wrapMode: Text.WordWrap
-          text: String(root.search.error || ""); color: Color.urgent
+          text: String(root.search.error || ""); color: Commons.Color.urgent
           font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
         }
       }
@@ -716,7 +717,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Style.space(8)
             SectionLabel {
-              color: Color.accent
+              color: Commons.Color.accent
               text: root.view === "artist" ? "ИСПОЛНИТЕЛЬ" : (root.view === "album" ? "АЛЬБОМ" : "ПЛЕЙЛИСТ")
             }
             Text {
@@ -759,7 +760,7 @@ Item {
           textFormat: Text.PlainText
           visible: String(root.entity.error || "") !== ""
           width: parent.width; wrapMode: Text.WordWrap
-          text: String(root.entity.error || ""); color: Color.urgent
+          text: String(root.entity.error || ""); color: Commons.Color.urgent
           font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
         }
         IconButton {
@@ -794,7 +795,7 @@ Item {
               visible: (root.view === "album" || root.view === "playlist")
                 && (root.entity.hasMore === true || root.entity.loadingMore === true)
               text: root.entity.loadingMore ? "Загружаем…" : "Загрузить ещё треки"
-              bordered: true; foreground: Color.accent
+              bordered: true; foreground: Commons.Color.accent
               onClicked: root.entityMoreRequested()
             }
           }
@@ -831,7 +832,7 @@ Item {
             }
             IconButton {
               visible: (root.entity.releaseHasMore || {})[entityReleases.releaseKind] === true
-              text: "Загрузить ещё"; bordered: true; foreground: Color.accent
+              text: "Загрузить ещё"; bordered: true; foreground: Commons.Color.accent
               onClicked: root.controller.releaseMoreRequested(entityReleases.releaseKind)
             }
           }
@@ -885,8 +886,8 @@ Item {
             ? Style.space(56) : Style.space(42)))))
         radius: Style.cornerRadius
         color: actionable && catalogRow.hovered
-          ? Style.hoverFillFor(root.foreground, Color.accent)
-          : (rowKind === "best" ? Style.normalFillFor(root.foreground, Color.accent) : "transparent")
+          ? Style.hoverFillFor(root.foreground, Commons.Color.accent)
+          : (rowKind === "best" ? Style.normalFillFor(root.foreground, Commons.Color.accent) : "transparent")
         borderSpec: Border.none()
 
         HoverHandler { id: catalogHover }
@@ -967,7 +968,7 @@ Item {
             Text {
               textFormat: Text.PlainText
               text: root.view === "artist" ? "ИСПОЛНИТЕЛЬ" : root.view === "album" ? "АЛЬБОМ" : "ПЛЕЙЛИСТ"
-              color: Color.accent; font.family: root.fontFamily; font.pixelSize: Style.space(9)
+              color: Commons.Color.accent; font.family: root.fontFamily; font.pixelSize: Style.space(9)
               font.letterSpacing: 1.2
             }
             Text {
@@ -988,7 +989,7 @@ Item {
                   required property var modelData
                   required property int index
                   text: modelData.name + (index < (catalogRow.value.artists || []).length - 1 ? ", " : "")
-                  color: Color.accent; font.family: root.fontFamily; font.pixelSize: Style.space(10)
+                  color: Commons.Color.accent; font.family: root.fontFamily; font.pixelSize: Style.space(10)
                   font.underline: entityArtistMouse.containsMouse
                   MouseArea {
                     id: entityArtistMouse; anchors.fill: parent; hoverEnabled: true
@@ -1032,9 +1033,9 @@ Item {
           elide: catalogRow.rowKind === "description" ? Text.ElideNone : Text.ElideRight
           horizontalAlignment: catalogRow.rowKind.indexOf("load") === 0
             || catalogRow.rowKind.indexOf("retry") === 0 ? Text.AlignHCenter : Text.AlignLeft
-          color: catalogRow.rowKind === "error" ? Color.urgent
+          color: catalogRow.rowKind === "error" ? Commons.Color.urgent
             : (catalogRow.rowKind.indexOf("load") === 0
-              || catalogRow.rowKind.indexOf("retry") === 0 ? Color.accent : root.dim)
+              || catalogRow.rowKind.indexOf("retry") === 0 ? Commons.Color.accent : root.dim)
           font.family: root.fontFamily
           font.pixelSize: catalogRow.rowKind === "section" ? Style.font.caption : Style.font.bodySmall
           font.bold: catalogRow.rowKind === "section"
@@ -1086,7 +1087,7 @@ Item {
                   required property var modelData
                   required property int index
                   text: modelData.name + (index < (catalogRow.value.artists || []).length - 1 ? ", " : "")
-                  color: catalogArtistMouse.containsMouse ? Color.accent : root.dim
+                  color: catalogArtistMouse.containsMouse ? Commons.Color.accent : root.dim
                   font.family: root.fontFamily; font.pixelSize: Style.font.caption
                   MouseArea {
                     id: catalogArtistMouse; anchors.fill: parent; hoverEnabled: true
@@ -1102,7 +1103,7 @@ Item {
                 text: (catalogRow.value.artists || []).length > 0
                   ? " · " + String(catalogRow.value.album || "") : String(catalogRow.value.album || "")
                 color: catalogAlbumMouse.containsMouse && String(catalogRow.value.albumId || "") !== ""
-                  ? Color.accent : root.dim
+                  ? Commons.Color.accent : root.dim
                 font.family: root.fontFamily; font.pixelSize: Style.font.caption
                 MouseArea {
                   id: catalogAlbumMouse; anchors.fill: parent
@@ -1142,7 +1143,7 @@ Item {
               horizontalPadding: 0; verticalPadding: 0
               iconText: "󰐒"; iconSize: Style.font.icon
               tooltipText: "В плейлист…"
-              foreground: hot ? Color.accent : root.dim
+              foreground: hot ? Commons.Color.accent : root.dim
               onClicked: root.collectionTrackRequested(
                 String(modelData.source || "search") === "entity"
                   ? "catalogEntity" : "catalogSearch",
@@ -1170,8 +1171,8 @@ Item {
       anchors.leftMargin: root.pad; anchors.rightMargin: root.pad
       height: visible ? Math.min(Style.space(152), suggestionList.contentHeight + Style.space(4)) : 0
       radius: Style.cornerRadius
-      color: Color.popups.background
-      borderSpec: Border.controlSpec("focus", root.foreground, Color.accent)
+      color: Commons.Color.popups.background
+      borderSpec: Border.controlSpec("focus", root.foreground, Commons.Color.accent)
       ListView {
         id: suggestionList
         anchors.fill: parent; anchors.margins: Style.space(2)
@@ -1183,7 +1184,7 @@ Item {
           Rectangle {
             anchors.fill: parent
             color: index === root.controller.highlightedSuggestionIndex
-              ? Style.hoverFillFor(root.foreground, Color.accent) : "transparent"
+              ? Style.hoverFillFor(root.foreground, Commons.Color.accent) : "transparent"
           }
           Text {
             textFormat: Text.PlainText

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Io
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // TextEdit's plain-text canPaste checks MIME formats, unlike TextInput's
@@ -15,8 +16,8 @@ FocusScope {
   readonly property alias selectionStart: editor.selectionStart
   readonly property alias selectionEnd: editor.selectionEnd
   property string placeholderText: ""
-  property color foreground: Color.foreground
-  property color accent: Color.accent
+  property color foreground: Commons.Color.foreground
+  property color accent: Commons.Color.accent
   property real leftPadding: Style.spacing.controlPaddingX
   property real rightPadding: Style.spacing.controlPaddingX
   property string pasteError: ""

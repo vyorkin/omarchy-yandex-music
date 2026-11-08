@@ -3,6 +3,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Io
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "DetailsReconciler.js" as DetailsReconciler
 import "ActionIntents.js" as ActionIntents
@@ -111,7 +112,7 @@ Panel {
   readonly property bool trackInfoLoading: trackInfoData.loading === true
   readonly property var trackInfoRows: buildTrackInfoRows()
   readonly property bool currentTrackPaneOpen: lyricsOpen || trackInfoOpen
-  readonly property color foreground: bar ? bar.foreground : Color.foreground
+  readonly property color foreground: bar ? bar.foreground : Commons.Color.foreground
   readonly property color dim: Qt.darker(foreground, 1.5)
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   // Keep the queue model independent from frequently replaced status objects.
@@ -1578,8 +1579,8 @@ Panel {
           z: 60
           height: visible ? errorContent.implicitHeight + Style.space(20) : 0
           radius: Style.cornerRadius
-          color: Qt.rgba(Color.urgent.r, Color.urgent.g, Color.urgent.b, .14)
-          borderSpec: Border.controlSpec("normal", Color.urgent, Color.urgent)
+          color: Qt.rgba(Commons.Color.urgent.r, Commons.Color.urgent.g, Commons.Color.urgent.b, .14)
+          borderSpec: Border.controlSpec("normal", Commons.Color.urgent, Commons.Color.urgent)
 
           Column {
             id: errorContent
@@ -1595,14 +1596,14 @@ Panel {
                 width: parent.width - retryErrorButton.width - dismissErrorButton.width - Style.space(10)
                 anchors.verticalCenter: parent.verticalCenter
                 text: root.errorTitle
-                color: Color.urgent; font.family: root.fontFamily
+                color: Commons.Color.urgent; font.family: root.fontFamily
                 font.pixelSize: Style.font.bodySmall; font.bold: true
               }
               IconButton {
                 id: retryErrorButton
                 iconText: "󰑐"; iconSize: Style.font.icon
                 horizontalPadding: Style.space(5); verticalPadding: Style.space(3)
-                tooltipText: "Повторить"; foreground: Color.urgent
+                tooltipText: "Повторить"; foreground: Commons.Color.urgent
                 onClicked: root.retryLastOperation()
               }
               IconButton {
@@ -1650,8 +1651,8 @@ Panel {
         focus: true
         Keys.onEscapePressed: root.closePlayerActions()
         background: BorderSurface {
-          color: Color.background
-          borderSpec: Border.controlSpec("normal", root.foreground, Color.accent)
+          color: Commons.Color.background
+          borderSpec: Border.controlSpec("normal", root.foreground, Commons.Color.accent)
           radius: Style.cornerRadius
         }
 
@@ -1727,7 +1728,7 @@ Panel {
             iconText: "󱐴"
             text: root.data.disliked
               ? "Снять «Не рекомендовать»" : "Не рекомендовать"
-            foreground: root.data.disliked ? Color.urgent : root.foreground
+            foreground: root.data.disliked ? Commons.Color.urgent : root.foreground
             enabled: !root.busy
             onClicked: root.runPlayerMenuAction("dislike")
             BorderSurface {
@@ -1735,7 +1736,7 @@ Panel {
               anchors.verticalCenter: parent.verticalCenter
               width: Style.space(20); height: Style.space(18)
               color: "transparent"
-              borderSpec: Border.controlSpec("normal", root.foreground, Color.accent)
+              borderSpec: Border.controlSpec("normal", root.foreground, Commons.Color.accent)
               Text {
                 textFormat: Text.PlainText
                 anchors.centerIn: parent
@@ -1758,7 +1759,7 @@ Panel {
             leftAlign: true; focusable: true
             iconText: root.playbackModeIcon
             text: "Режим: " + root.playbackModeLabel
-            foreground: root.playbackMode !== "order" ? Color.accent : root.foreground
+            foreground: root.playbackMode !== "order" ? Commons.Color.accent : root.foreground
             enabled: !root.busy
             onClicked: root.runPlayerMenuAction("mode")
           }
@@ -1854,7 +1855,7 @@ Panel {
         width: Style.space(18); height: width; radius: width / 2
         color: "transparent"
         border.width: Style.spacing.hairline
-        border.color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .2)
+        border.color: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .2)
       }
 
       Canvas {
@@ -1871,7 +1872,7 @@ Panel {
             -Math.PI / 2, Math.PI * .85, false)
           context.lineWidth = Style.space(2)
           context.lineCap = "round"
-          context.strokeStyle = Color.accent
+          context.strokeStyle = Commons.Color.accent
           context.stroke()
         }
       }

@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 
 // 24 px wide, full-height hit zone with a centred 14 px icon. States: default, hover (fg 8 %
 // fill), pressed (accent fill, 13 px accent icon, no animation), keyboard focus
@@ -12,7 +13,7 @@ Item {
   property string name: ""
   property string glyph: ""
   property bool filled: false
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color iconColor: foreground
   property string tooltip: ""
   property real iconOpacity: 1
@@ -36,11 +37,11 @@ Item {
     anchors.fill: parent
     radius: root.flash ? width / 2 : Style.cornerRadius
     color: root.pressed || root.flash
-      ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .2)
+      ? Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .2)
       : (mouse.containsMouse ? Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .08)
         : "transparent")
     border.width: root.activeFocus ? 1 : 0
-    border.color: Color.accent
+    border.color: Commons.Color.accent
     Behavior on color {
       enabled: !root.pressed
       ColorAnimation { duration: 120; easing.type: Easing.OutQuad }
@@ -50,14 +51,14 @@ Item {
     anchors.centerIn: parent
     name: root.name; glyph: root.glyph; filled: root.filled
     size: root.pressed ? Style.space(13) : Style.space(14)
-    color: root.pressed ? Color.accent : (mouse.containsMouse ? Qt.lighter(root.iconColor, 1.15) : root.iconColor)
+    color: root.pressed ? Commons.Color.accent : (mouse.containsMouse ? Qt.lighter(root.iconColor, 1.15) : root.iconColor)
     opacity: root.iconOpacity
   }
   Rectangle {
     visible: root.errorDot
     x: Style.space(3); y: Style.space(2)
     width: Style.space(6); height: width; radius: width / 2
-    color: Color.urgent
+    color: Commons.Color.urgent
   }
   MouseArea {
     id: mouse

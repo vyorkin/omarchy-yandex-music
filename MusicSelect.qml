@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Compact single-select used across the popup. Shows the current value in the
@@ -14,7 +15,7 @@ Item {
   property string defaultValue: ""
   property bool busy: false
   property string error: ""
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.darker(foreground, 1.5)
   property string fontFamily: Style.font.family
   readonly property bool popupOpen: popup.opened
@@ -50,11 +51,11 @@ Item {
     opacity: root.enabled ? 1 : .45
     activeFocusOnTab: root.enabled
     color: triggerHover.hovered || trigger.activeFocus || popup.opened
-      ? Style.hoverFillFor(root.foreground, Color.accent)
-      : Style.normalFillFor(root.foreground, Color.accent)
-    borderSpec: root.error !== "" ? Border.controlSpec("normal", Color.urgent, Color.urgent)
+      ? Style.hoverFillFor(root.foreground, Commons.Color.accent)
+      : Style.normalFillFor(root.foreground, Commons.Color.accent)
+    borderSpec: root.error !== "" ? Border.controlSpec("normal", Commons.Color.urgent, Commons.Color.urgent)
       : Border.controlSpec(popup.opened || trigger.activeFocus ? "focus"
-        : (triggerHover.hovered ? "hover-cursor" : "normal"), root.foreground, Color.accent)
+        : (triggerHover.hovered ? "hover-cursor" : "normal"), root.foreground, Commons.Color.accent)
 
     HoverHandler { id: triggerHover; enabled: root.enabled }
 
@@ -76,7 +77,7 @@ Item {
       anchors.leftMargin: Style.space(12); anchors.rightMargin: Style.space(6)
       anchors.verticalCenter: parent.verticalCenter
       text: root.currentLabel()
-      color: root.changedFromDefault ? Color.accent : root.foreground
+      color: root.changedFromDefault ? Commons.Color.accent : root.foreground
       font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
       elide: Text.ElideRight
     }
@@ -85,7 +86,7 @@ Item {
       anchors.right: parent.right; anchors.rightMargin: Style.space(10)
       anchors.verticalCenter: parent.verticalCenter
       glyph: root.error !== "" ? "󰀦" : (root.busy ? "󰦖" : (popup.opened ? "󰅃" : "󰅀"))
-      color: root.error !== "" ? Color.urgent : root.dim
+      color: root.error !== "" ? Commons.Color.urgent : root.dim
       fontFamily: root.fontFamily; size: Style.space(15)
       RotationAnimator on rotation {
         running: root.busy; from: 0; to: 360; duration: 900; loops: Animation.Infinite
@@ -110,9 +111,9 @@ Item {
       focus: true
       implicitHeight: Math.min(root.options.length, 8) * Style.space(30) + Style.space(2)
       background: BorderSurface {
-        color: Color.popups.background
+        color: Commons.Color.popups.background
         radius: Style.cornerRadius
-        borderSpec: Border.controlSpec("focus", root.foreground, Color.accent)
+        borderSpec: Border.controlSpec("focus", root.foreground, Commons.Color.accent)
       }
       onOpened: {
         optionList.currentIndex = Math.max(0, root.indexOfValue(root.value))
@@ -149,17 +150,17 @@ Item {
           width: optionList.width
           height: Style.space(30)
           color: index === optionList.currentIndex
-            ? Style.selectedFillFor(root.foreground, Color.accent) : "transparent"
+            ? Style.selectedFillFor(root.foreground, Commons.Color.accent) : "transparent"
           Rectangle {
             visible: optionRow.index === optionList.currentIndex
-            width: Style.space(2); height: parent.height; color: Color.accent
+            width: Style.space(2); height: parent.height; color: Commons.Color.accent
           }
           Text {
             textFormat: Text.PlainText
             anchors.left: parent.left; anchors.right: checkGlyph.left
             anchors.leftMargin: Style.space(10); anchors.verticalCenter: parent.verticalCenter
             text: root.optionLabel(optionRow.modelData)
-            color: optionRow.selected ? Color.accent : root.foreground
+            color: optionRow.selected ? Commons.Color.accent : root.foreground
             font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
             font.bold: optionRow.selected
             elide: Text.ElideRight
@@ -169,7 +170,7 @@ Item {
             visible: optionRow.selected
             anchors.right: parent.right; anchors.rightMargin: Style.space(10)
             anchors.verticalCenter: parent.verticalCenter
-            glyph: "󰄬"; color: Color.accent
+            glyph: "󰄬"; color: Commons.Color.accent
             fontFamily: root.fontFamily; size: Style.font.bodySmall
           }
           MouseArea {
@@ -190,12 +191,12 @@ Item {
     spacing: Style.space(6)
     Text {
       textFormat: Text.PlainText
-      text: root.error; color: Color.urgent
+      text: root.error; color: Commons.Color.urgent
       font.family: root.fontFamily; font.pixelSize: Style.font.caption
     }
     Text {
       textFormat: Text.PlainText
-      text: "Повторить"; color: Color.accent
+      text: "Повторить"; color: Commons.Color.accent
       font.family: root.fontFamily; font.pixelSize: Style.font.caption
       MouseArea {
         anchors.fill: parent; cursorShape: Qt.PointingHandCursor

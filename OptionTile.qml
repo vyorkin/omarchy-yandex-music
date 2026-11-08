@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Selectable tile for My Wave settings: glyph above a label (`vertical`) or
@@ -14,17 +15,17 @@ BorderSurface {
   property bool vertical: true
   property bool stacked: false
   property bool busy: false
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.darker(foreground, 1.5)
   property string fontFamily: Style.font.family
   signal clicked()
 
   radius: Style.cornerRadius
   opacity: busy ? .6 : 1
-  color: selected ? Style.selectedFillFor(foreground, Color.accent)
-    : (area.containsMouse ? Style.hoverFillFor(foreground, Color.accent)
-      : Style.normalFillFor(foreground, Color.accent))
-  borderSpec: Border.controlSpec(selected ? "selected" : "normal", foreground, Color.accent)
+  color: selected ? Style.selectedFillFor(foreground, Commons.Color.accent)
+    : (area.containsMouse ? Style.hoverFillFor(foreground, Commons.Color.accent)
+      : Style.normalFillFor(foreground, Commons.Color.accent))
+  borderSpec: Border.controlSpec(selected ? "selected" : "normal", foreground, Commons.Color.accent)
 
   Column {
     visible: root.vertical && !root.stacked
@@ -32,7 +33,7 @@ BorderSurface {
     spacing: Style.space(8)
     LucideIcon {
       anchors.horizontalCenter: parent.horizontalCenter
-      glyph: root.glyph; color: root.selected ? Color.accent : root.dim
+      glyph: root.glyph; color: root.selected ? Commons.Color.accent : root.dim
       fontFamily: root.fontFamily; size: Style.space(18)
     }
     Text {
@@ -50,7 +51,7 @@ BorderSurface {
     LucideIcon {
       id: sideGlyph
       anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
-      glyph: root.glyph; color: root.selected ? Color.accent : root.dim
+      glyph: root.glyph; color: root.selected ? Commons.Color.accent : root.dim
       fontFamily: root.fontFamily; size: Style.space(16)
     }
     Column {
@@ -79,7 +80,7 @@ BorderSurface {
     anchors.margins: Style.space(12)
     LucideIcon {
       anchors.left: parent.left; anchors.top: parent.top
-      glyph: root.glyph; color: root.selected ? Color.accent : root.dim
+      glyph: root.glyph; color: root.selected ? Commons.Color.accent : root.dim
       fontFamily: root.fontFamily; size: Style.space(15)
     }
     Column {
@@ -104,7 +105,7 @@ BorderSurface {
     anchors.fill: parent
     color: "transparent"
     border.width: root.selected ? 1 : 0
-    border.color: Color.accent
+    border.color: Commons.Color.accent
   }
   MouseArea {
     id: area

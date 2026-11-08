@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // One row of the wide layout's navigation rail.
@@ -12,29 +13,29 @@ BorderSurface {
   property bool selected: false
   property bool secondary: false
   property bool dense: false
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property color dim: Qt.darker(foreground, 1.5)
   property string fontFamily: Style.font.family
   signal clicked()
 
   height: dense ? Style.space(32) : Style.space(37)
   radius: Style.cornerRadius
-  color: selected ? (secondary ? Style.normalFillFor(foreground, Color.accent)
-    : Style.selectedFillFor(foreground, Color.accent))
-    : (area.containsMouse ? Style.hoverFillFor(foreground, Color.accent) : "transparent")
+  color: selected ? (secondary ? Style.normalFillFor(foreground, Commons.Color.accent)
+    : Style.selectedFillFor(foreground, Commons.Color.accent))
+    : (area.containsMouse ? Style.hoverFillFor(foreground, Commons.Color.accent) : "transparent")
   borderSpec: Border.none()
 
   Rectangle {
     visible: root.selected && !root.secondary
     width: Style.space(2); height: parent.height
-    color: Color.accent
+    color: Commons.Color.accent
   }
   LucideIcon {
     id: glyphText
     anchors.left: parent.left; anchors.leftMargin: Style.space(14)
     anchors.verticalCenter: parent.verticalCenter
     glyph: root.glyph
-    color: root.selected ? Color.accent : root.dim
+    color: root.selected ? Commons.Color.accent : root.dim
     fontFamily: root.fontFamily; size: Style.space(15)
   }
   Text {

@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Round accent play/pause button with a soft accent fill.
@@ -13,8 +14,8 @@ IconButton {
   horizontalPadding: 0; verticalPadding: 0
   iconSize: Math.round(size * .42)
   tooltipText: panel.playing ? "Пауза (Space)" : "Продолжить (Space)"
-  foreground: Color.accent; bordered: true
-  background: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .16)
+  foreground: Commons.Color.accent; bordered: true
+  background: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .16)
   enabled: panel.hasTrack
   opacity: enabled ? 1 : .4
   anchors.verticalCenter: parent ? parent.verticalCenter : undefined

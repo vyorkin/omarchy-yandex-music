@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Wide layout: cover, track details, transport and volume of the current track.
@@ -24,7 +25,7 @@ Item {
       id: cover
       width: root.coverSize; height: width
       anchors.horizontalCenter: parent.horizontalCenter
-      color: Style.selectedFillFor(root.fg, Color.accent)
+      color: Style.selectedFillFor(root.fg, Commons.Color.accent)
       clip: true
       CatalogImage {
         anchors.fill: parent
@@ -63,7 +64,7 @@ Item {
               required property var modelData
               required property int index
               text: modelData.name + (index < (panel.data.artists || []).length - 1 ? ", " : "")
-              color: Color.accent
+              color: Commons.Color.accent
               font.family: root.ff; font.pixelSize: Style.font.subtitle
               font.underline: nowArtistMouse.containsMouse
               MouseArea {
@@ -81,7 +82,7 @@ Item {
         text: panel.hasTrack ? String(panel.data.album || panel.data.queueName || "")
           : (panel.authenticated ? "Выберите музыку" : "Автономный плеер")
         color: nowAlbumMouse.containsMouse && String(panel.data.albumId || "") !== ""
-          ? Color.accent : root.dim
+          ? Commons.Color.accent : root.dim
         font.family: root.ff; font.pixelSize: Style.font.bodySmall
         MouseArea {
           id: nowAlbumMouse; anchors.fill: parent
@@ -103,7 +104,7 @@ Item {
         horizontalPadding: 0; verticalPadding: 0; iconSize: Style.space(18)
         iconText: panel.data.liked ? "󰋑" : "󰋕"
         tooltipText: panel.data.liked ? "Убрать из «Мне нравится» (L)" : "Добавить в «Мне нравится» (L)"
-        foreground: panel.data.liked ? Color.accent : root.fg
+        foreground: panel.data.liked ? Commons.Color.accent : root.fg
         enabled: panel.hasTrack; opacity: enabled ? 1 : .4
         onClicked: panel.transport("toggleLike")
       }

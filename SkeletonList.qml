@@ -1,9 +1,10 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 
 Column {
   id: skeletonRoot
-  property color foreground: Color.foreground
+  property color foreground: Commons.Color.foreground
   property int rowCount: 5
   spacing: 0
 

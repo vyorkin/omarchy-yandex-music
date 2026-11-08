@@ -3,6 +3,7 @@ import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Settings (design p2voD/GiP8C/o7ky4): «Основные» and «Верхний бар» tabs.
@@ -19,7 +20,7 @@ Item {
   readonly property color fg: panel.foreground
   readonly property color dim: panel.dim
   readonly property string ff: panel.fontFamily
-  readonly property color accentFill: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .18)
+  readonly property color accentFill: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .18)
   readonly property color hairline: Qt.rgba(fg.r, fg.g, fg.b, .08)
   readonly property real gutter: wide ? Style.space(28) : Style.space(16)
   readonly property real columnGap: Style.space(32)
@@ -106,7 +107,7 @@ Item {
       id: sectionTitle
       y: section.topGap
       textFormat: Text.PlainText
-      color: Color.accent
+      color: Commons.Color.accent
       font.family: root.ff; font.pixelSize: Style.font.caption
       font.bold: true; font.letterSpacing: Style.space(1.6)
     }
@@ -256,8 +257,8 @@ Item {
       anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
       width: Style.space(root.wide ? 136 : 128); height: Style.space(root.wide ? 28 : 26)
       radius: Style.cornerRadius
-      color: Style.normalFillFor(root.fg, Color.accent)
-      borderSpec: Border.controlSpec("normal", root.fg, Color.accent)
+      color: Style.normalFillFor(root.fg, Commons.Color.accent)
+      borderSpec: Border.controlSpec("normal", root.fg, Commons.Color.accent)
       opacity: widthRow.active ? 1 : .4
       Behavior on opacity { NumberAnimation { duration: 120 } }
 
@@ -277,13 +278,13 @@ Item {
             radius: Math.max(0, stepper.radius - 1)
             color: stepMouse.pressed && stepButton.enabledStep ? root.accentFill
               : (stepMouse.containsMouse && stepButton.enabledStep
-                ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
+                ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent")
           }
           LucideIcon {
             anchors.centerIn: parent
             name: stepButton.modelData.icon
             color: !stepButton.enabledStep ? Qt.rgba(root.dim.r, root.dim.g, root.dim.b, .4)
-              : (stepMouse.containsMouse ? Color.accent : root.fg)
+              : (stepMouse.containsMouse ? Commons.Color.accent : root.fg)
             size: Style.space(13)
           }
           MouseArea {
@@ -320,7 +321,7 @@ Item {
           anchors.baseline: unitText.baseline
           textFormat: Text.PlainText
           text: String(widthRow.value)
-          color: widthRow.pending >= 0 ? Color.accent : root.fg
+          color: widthRow.pending >= 0 ? Commons.Color.accent : root.fg
           font.family: root.ff; font.pixelSize: Style.font.body; font.bold: true
           Behavior on color { ColorAnimation { duration: 160 } }
         }
@@ -416,8 +417,8 @@ Item {
     signal activated()
     radius: Style.cornerRadius
     color: tile.checked ? root.accentFill
-      : (tileMouse.containsMouse ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
-    borderSpec: Border.controlSpec(tile.checked ? "selected" : "normal", root.fg, Color.accent)
+      : (tileMouse.containsMouse ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent")
+    borderSpec: Border.controlSpec(tile.checked ? "selected" : "normal", root.fg, Commons.Color.accent)
     Row {
       visible: !tile.stacked
       anchors.left: parent.left; anchors.leftMargin: Style.space(8)
@@ -427,7 +428,7 @@ Item {
       LucideIcon {
         id: tileIcon
         anchors.verticalCenter: parent.verticalCenter
-        name: tile.icon; color: tile.checked ? Color.accent : root.dim
+        name: tile.icon; color: tile.checked ? Commons.Color.accent : root.dim
         size: Style.space(13)
       }
       Text {
@@ -443,13 +444,13 @@ Item {
       anchors.fill: parent; anchors.margins: Style.space(10)
       LucideIcon {
         anchors.left: parent.left; anchors.top: parent.top
-        name: tile.icon; color: tile.checked ? Color.accent : root.dim
+        name: tile.icon; color: tile.checked ? Commons.Color.accent : root.dim
         size: Style.space(15)
       }
       LucideIcon {
         anchors.right: parent.right; anchors.top: parent.top; anchors.topMargin: Style.space(1)
         name: tile.checked ? "square-check" : "square"
-        color: tile.checked ? Color.accent : root.dim
+        color: tile.checked ? Commons.Color.accent : root.dim
         size: Style.space(13)
       }
       Text {
@@ -490,7 +491,7 @@ Item {
     height: accountColumn.implicitHeight + Style.space(24)
     radius: Style.cornerRadius
     color: "transparent"
-    borderSpec: Border.controlSpec("normal", root.fg, Color.accent)
+    borderSpec: Border.controlSpec("normal", root.fg, Commons.Color.accent)
     Column {
       id: accountColumn
       x: Style.space(12); y: Style.space(12)
@@ -502,7 +503,7 @@ Item {
         LucideIcon {
           id: accountIcon
           anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
-          name: "circle-check"; color: Color.accent; size: Style.space(16)
+          name: "circle-check"; color: Commons.Color.accent; size: Style.space(16)
         }
         Column {
           id: accountText
@@ -528,7 +529,7 @@ Item {
           anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
           visible: !panel.confirmLogout
           width: visible ? implicitWidth : 0
-          text: "Выйти"; foreground: Color.urgent; bordered: true
+          text: "Выйти"; foreground: Commons.Color.urgent; bordered: true
           fontSize: Style.font.bodySmall
           onClicked: panel.confirmLogout = true
         }
@@ -539,7 +540,7 @@ Item {
         width: parent.width; wrapMode: Text.WordWrap
         textFormat: Text.PlainText
         text: "Токен авторизации будет удалён. Для повторного входа понадобится браузер."
-        color: Color.urgent; font.family: root.ff; font.pixelSize: Style.font.caption
+        color: Commons.Color.urgent; font.family: root.ff; font.pixelSize: Style.font.caption
       }
       Row {
         visible: panel.confirmLogout
@@ -551,7 +552,7 @@ Item {
           onClicked: panel.confirmLogout = false
         }
         IconButton {
-          text: "Подтвердить выход"; foreground: Color.urgent; bordered: true
+          text: "Подтвердить выход"; foreground: Commons.Color.urgent; bordered: true
           fontSize: Style.font.bodySmall
           onClicked: {
             panel.intent("logout")
@@ -581,8 +582,8 @@ Item {
     Layout.alignment: Qt.AlignVCenter
     radius: Style.cornerRadius
     color: hot ? root.accentFill
-      : (slotMouse.containsMouse ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
-    borderSpec: hot ? Border.controlSpec("selected", root.fg, Color.accent) : Border.none()
+      : (slotMouse.containsMouse ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent")
+    borderSpec: hot ? Border.controlSpec("selected", root.fg, Commons.Color.accent) : Border.none()
     Row {
       id: slotRow
       x: slot.pad
@@ -627,8 +628,8 @@ Item {
     height: root.wide ? Style.space(40) : Style.space(34)
     radius: Style.cornerRadius
     clip: true
-    color: Style.normalFillFor(root.fg, Color.accent)
-    borderSpec: Border.controlSpec("normal", root.fg, Color.accent)
+    color: Style.normalFillFor(root.fg, Commons.Color.accent)
+    borderSpec: Border.controlSpec("normal", root.fg, Commons.Color.accent)
 
     RowLayout {
       anchors.fill: parent
@@ -648,7 +649,7 @@ Item {
           readonly property string shape: String(root.pref("coverShape", "rounded"))
           width: Style.space(root.wide ? 20 : 18); height: width
           radius: shape === "circle" ? width / 2 : (shape === "square" ? 0 : Style.space(4))
-          color: Style.normalFillFor(root.fg, Color.accent)
+          color: Style.normalFillFor(root.fg, Commons.Color.accent)
           Rectangle {
             id: previewCoverMask
             anchors.fill: parent
@@ -700,7 +701,7 @@ Item {
         LucideIcon {
           visible: root.wide
           anchors.verticalCenter: parent.verticalCenter
-          name: "captions"; color: lyricSlot.hot ? Color.accent : root.fg; size: strip.iconSize
+          name: "captions"; color: lyricSlot.hot ? Commons.Color.accent : root.fg; size: strip.iconSize
         }
         PreviewText {
           id: lyricText
@@ -731,7 +732,7 @@ Item {
       opacity: strip.progressOn ? 1 : .3
       width: Math.max(Style.space(4), (parent.width - 2) * root.previewProgress)
       height: Style.space(root.hotKey === "showProgress" ? 3 : 2)
-      color: Color.accent
+      color: Commons.Color.accent
     }
   }
   component PreviewHint: Row {
@@ -821,7 +822,7 @@ Item {
             LucideIcon {
               anchors.verticalCenter: parent.verticalCenter
               name: tabItem.modelData.icon
-              color: tabItem.selected ? Color.accent : (tabMouse.containsMouse ? root.fg : root.dim)
+              color: tabItem.selected ? Commons.Color.accent : (tabMouse.containsMouse ? root.fg : root.dim)
               size: Style.space(13)
             }
             Text {
@@ -836,7 +837,7 @@ Item {
           Rectangle {
             visible: tabItem.selected
             anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
-            height: Style.space(2); color: Color.accent
+            height: Style.space(2); color: Commons.Color.accent
           }
           MouseArea {
             id: tabMouse

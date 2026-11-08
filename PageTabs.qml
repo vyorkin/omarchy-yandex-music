@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 // Compact layout page strip: three pages plus the layout toggle cell.
@@ -32,8 +33,8 @@ Item {
         height: root.height
         Rectangle {
           anchors.fill: parent
-          color: tab.selected ? Style.selectedFillFor(root.fg, Color.accent)
-            : (tabMouse.containsMouse ? Style.hoverFillFor(root.fg, Color.accent) : "transparent")
+          color: tab.selected ? Style.selectedFillFor(root.fg, Commons.Color.accent)
+            : (tabMouse.containsMouse ? Style.hoverFillFor(root.fg, Commons.Color.accent) : "transparent")
           opacity: tab.selected ? .5 : 1
         }
         Row {
@@ -42,7 +43,7 @@ Item {
           LucideIcon {
             anchors.verticalCenter: parent.verticalCenter
             glyph: tab.modelData.glyph
-            color: tab.selected ? Color.accent : root.dim
+            color: tab.selected ? Commons.Color.accent : root.dim
             fontFamily: root.ff; size: Style.space(14)
           }
           Text {
@@ -57,7 +58,7 @@ Item {
         Rectangle {
           visible: tab.selected
           anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
-          height: Style.space(2); color: Color.accent
+          height: Style.space(2); color: Commons.Color.accent
         }
         MouseArea {
           id: tabMouse

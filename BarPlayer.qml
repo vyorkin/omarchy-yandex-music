@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 Item {
@@ -107,7 +108,7 @@ Item {
     }
     return ""
   }
-  readonly property color foreground: bar ? bar.barForeground : Color.foreground
+  readonly property color foreground: bar ? bar.barForeground : Commons.Color.foreground
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
   readonly property string errorText: logic && logic.snapshot.version === undefined
     ? "Нет связи с сервисом" : "Ошибка Яндекс Музыки"
@@ -167,12 +168,12 @@ Item {
         spacing: Style.space(8)
         LucideIcon {
           anchors.verticalCenter: parent.verticalCenter
-          name: "log-in"; color: Color.accent; size: Style.space(14)
+          name: "log-in"; color: Commons.Color.accent; size: Style.space(14)
         }
         Text {
           textFormat: Text.PlainText
           anchors.verticalCenter: parent.verticalCenter
-          text: "Войти в Яндекс Музыку"; color: Color.accent
+          text: "Войти в Яндекс Музыку"; color: Commons.Color.accent
           font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
         }
       }
@@ -194,12 +195,12 @@ Item {
         spacing: Style.space(8)
         Rectangle {
           anchors.verticalCenter: parent.verticalCenter
-          width: Style.space(7); height: width; radius: width / 2; color: Color.urgent
+          width: Style.space(7); height: width; radius: width / 2; color: Commons.Color.urgent
         }
         Text {
           textFormat: Text.PlainText
           anchors.verticalCenter: parent.verticalCenter
-          text: root.errorText; color: Color.urgent
+          text: root.errorText; color: Commons.Color.urgent
           font.family: root.fontFamily; font.pixelSize: Style.font.bodySmall
         }
       }
@@ -244,7 +245,7 @@ Item {
       bar: root.bar
       foreground: root.foreground
       name: "audio-lines"
-      iconColor: Color.accent
+      iconColor: Commons.Color.accent
       tooltip: "Открыть Яндекс Музыку"
       onClicked: if (root.logic) root.logic.toggle()
       onWheel: function(wheel) { infoArea.handleWheel(wheel, false) }
@@ -258,7 +259,7 @@ Item {
       anchors.verticalCenter: parent.verticalCenter
       radius: root.coverShape === "circle" ? width / 2
         : (root.coverShape === "square" ? 0 : Style.space(2))
-      color: Style.normalFillFor(root.foreground, Color.accent)
+      color: Style.normalFillFor(root.foreground, Commons.Color.accent)
       borderSpec: Border.none()
       opacity: root.dimmed ? .5 : 1
       Rectangle {
@@ -300,7 +301,7 @@ Item {
         width: Style.space(14); height: width; radius: width / 2
         color: "transparent"
         border.width: Style.spacing.hairline
-        border.color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .25)
+        border.color: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .25)
       }
       Canvas {
         anchors.centerIn: parent
@@ -316,14 +317,14 @@ Item {
             -Math.PI / 2, Math.PI * .85, false)
           context.lineWidth = Style.space(1.7)
           context.lineCap = "round"
-          context.strokeStyle = Color.accent
+          context.strokeStyle = Commons.Color.accent
           context.stroke()
         }
       }
       LucideIcon {
         anchors.centerIn: parent
         visible: root.hasError && !root.loading
-        glyph: "󰀪"; color: Color.urgent
+        glyph: "󰀪"; color: Commons.Color.urgent
         fontFamily: root.fontFamily; size: Style.font.caption
       }
       MouseArea {
@@ -408,7 +409,7 @@ Item {
       readonly property bool shownLiked: root.likePending ? !liked : liked
       name: "heart"
       filled: shownLiked
-      iconColor: shownLiked ? Color.accent : root.foreground
+      iconColor: shownLiked ? Commons.Color.accent : root.foreground
       iconOpacity: root.likePending ? .5 : 1
       flash: root.likeFlash
       errorDot: root.likeError
@@ -547,7 +548,7 @@ Item {
             if (w <= 0 || h <= 0) return
             ctx.clearRect(0, 0, w, h)
 
-            var col = Color.accent
+            var col = Commons.Color.accent
             var r = Math.round(col.r * 255)
             var g = Math.round(col.g * 255)
             var b = Math.round(col.b * 255)
@@ -586,7 +587,7 @@ Item {
         x: text === root.targetLyricText
           ? -Math.max(0, width - lyricsSlot.width) * root.lyricScrollProgress : 0
         text: lyricsSlot.currentDisplayedText
-        color: Color.accent
+        color: Commons.Color.accent
         opacity: 1.0
         font.family: root.fontFamily
         font.pixelSize: Style.font.bodySmall
@@ -652,7 +653,7 @@ Item {
         objectName: "barMute"
         anchors.left: parent.left; anchors.verticalCenter: parent.verticalCenter
         bar: root.bar; foreground: root.foreground
-        iconColor: volumeSlot.muted ? Color.accent : Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .7)
+        iconColor: volumeSlot.muted ? Commons.Color.accent : Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .7)
         name: volumeSlot.muted ? "volume-x" : (volumeSlot.volumeValue < 34 ? "volume-1" : "volume-2")
         filled: false
         tooltip: volumeSlot.muted ? "Включить звук · ЛКМ" : "Выкл. звук · ЛКМ"
@@ -687,7 +688,7 @@ Item {
           Rectangle {
             width: parent.width * volumeSlot.shownValue / 100
             height: parent.height; radius: parent.radius
-            color: volumeSlot.dragging ? Color.accent
+            color: volumeSlot.dragging ? Commons.Color.accent
               : (volumeSlot.muted ? Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .4)
                 : root.foreground)
           }
@@ -696,7 +697,7 @@ Item {
             x: Math.max(0, Math.min(parent.width, parent.width * volumeSlot.shownValue / 100)) - width / 2
             anchors.verticalCenter: parent.verticalCenter
             width: Style.space(10); height: width; radius: width / 2
-            color: volumeSlot.dragging ? Color.accent : root.foreground
+            color: volumeSlot.dragging ? Commons.Color.accent : root.foreground
           }
         }
 
@@ -731,7 +732,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         text: root.hasError ? "—" : (volumeSlot.muted ? "mute"
           : Math.round(volumeSlot.shownValue) + "%")
-        color: volumeSlot.dragging || volumeSlot.flashing || volumeSlot.muted ? Color.accent
+        color: volumeSlot.dragging || volumeSlot.flashing || volumeSlot.muted ? Commons.Color.accent
           : (volumeSlot.zoneHot ? root.foreground
             : Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .55))
         font.family: root.fontFamily; font.pixelSize: Style.font.caption
@@ -766,7 +767,7 @@ Item {
       && informationHover.hovered
       && informationHover.point.position.x >= x
       && informationHover.point.position.x < x + width
-    color: Style.hoverFillFor(root.foreground, Color.accent)
+    color: Style.hoverFillFor(root.foreground, Commons.Color.accent)
   }
   Rectangle {
     objectName: "barCoverHover"
@@ -781,7 +782,7 @@ Item {
       && informationHover.point.position.x < x + width
     readonly property bool pressed: hovered
       && (root.barMouseControls ? coverMouse.pressed : infoArea.pressed)
-    color: pressed ? Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, .2)
+    color: pressed ? Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, .2)
       : (hovered ? Qt.rgba(root.foreground.r, root.foreground.g, root.foreground.b, .08)
         : "transparent")
     Behavior on color {
@@ -948,7 +949,7 @@ Item {
         ? Math.min(1, root.displayPosition / Math.max(1, Number(root.logic.snapshot.duration || 1)))
         : 0)
       height: parent.height
-      color: Color.accent
+      color: Commons.Color.accent
     }
   }
 }
